@@ -31,6 +31,8 @@
         --secondary-text: #b0bec5;
         --card-bg: rgba(30, 30, 30, 0.7);
         --hover-color: #2a56c6;
+        --success-color: #4caf50;
+        --warning-color: #ff9800;
       }
 
       * {
@@ -110,6 +112,45 @@
       #globe {
         width: 100%;
         height: 100%;
+      }
+
+      /* Control Panel */
+      .control-panel {
+        position: absolute;
+        top: 20px;
+        right: 20px;
+        background-color: rgba(30, 30, 30, 0.9);
+        border-radius: 10px;
+        padding: 1rem;
+        z-index: 100;
+        backdrop-filter: blur(10px);
+      }
+
+      .control-panel h3 {
+        font-family: "Montserrat", sans-serif;
+        margin-bottom: 0.5rem;
+        color: var(--primary-color);
+        font-size: 1rem;
+      }
+
+      .control-panel button {
+        background-color: var(--primary-color);
+        color: white;
+        border: none;
+        padding: 0.5rem 1rem;
+        border-radius: 5px;
+        margin: 0.2rem;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        font-size: 0.9rem;
+      }
+
+      .control-panel button:hover {
+        background-color: var(--hover-color);
+      }
+
+      .control-panel button.active {
+        background-color: var(--accent-color);
       }
 
       /* Historical Data Section */
@@ -254,6 +295,146 @@
       .data-unit {
         font-size: 0.9rem;
         color: var(--secondary-text);
+      }
+
+      /* Crew Section */
+      .crew-section {
+        padding: 2rem 5%;
+        max-width: 1200px;
+        margin: 0 auto;
+        background-color: var(--light-bg);
+        border-radius: 10px;
+        margin-bottom: 2rem;
+      }
+
+      .crew-section h2 {
+        font-family: "Montserrat", sans-serif;
+        margin-bottom: 1.5rem;
+        color: var(--primary-color);
+        text-align: center;
+      }
+
+      .crew-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+        gap: 1rem;
+      }
+
+      .crew-member {
+        background-color: var(--card-bg);
+        border-radius: 10px;
+        padding: 1rem;
+        text-align: center;
+        transition: transform 0.3s ease;
+      }
+
+      .crew-member:hover {
+        transform: translateY(-5px);
+      }
+
+      .crew-avatar {
+        width: 80px;
+        height: 80px;
+        border-radius: 50%;
+        margin: 0 auto 0.5rem;
+        background-color: var(--primary-color);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 2rem;
+        color: white;
+      }
+
+      .crew-name {
+        font-weight: 600;
+        margin-bottom: 0.3rem;
+      }
+
+      .crew-craft {
+        font-size: 0.9rem;
+        color: var(--secondary-text);
+      }
+
+      /* Passes Section */
+      .passes-section {
+        padding: 2rem 5%;
+        max-width: 1200px;
+        margin: 0 auto;
+        background-color: var(--light-bg);
+        border-radius: 10px;
+        margin-bottom: 2rem;
+      }
+
+      .passes-section h2 {
+        font-family: "Montserrat", sans-serif;
+        margin-bottom: 1.5rem;
+        color: var(--primary-color);
+        text-align: center;
+      }
+
+      .city-selector {
+        display: flex;
+        gap: 1rem;
+        margin-bottom: 1.5rem;
+        justify-content: center;
+        flex-wrap: wrap;
+      }
+
+      .city-btn {
+        background-color: var(--card-bg);
+        border: 1px solid var(--primary-color);
+        color: var(--primary-color);
+        padding: 0.5rem 1rem;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+      }
+
+      .city-btn:hover {
+        background-color: var(--primary-color);
+        color: white;
+      }
+
+      .city-btn.active {
+        background-color: var(--accent-color);
+        border-color: var(--accent-color);
+        color: white;
+      }
+
+      .passes-list {
+        background-color: var(--card-bg);
+        border-radius: 10px;
+        padding: 1.5rem;
+        max-height: 300px;
+        overflow-y: auto;
+      }
+
+      .pass-item {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 0.8rem;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      }
+
+      .pass-item:last-child {
+        border-bottom: none;
+      }
+
+      .pass-time {
+        font-weight: 500;
+      }
+
+      .pass-duration {
+        color: var(--secondary-text);
+      }
+
+      .pass-visibility {
+        background-color: var(--success-color);
+        color: white;
+        padding: 0.2rem 0.8rem;
+        border-radius: 20px;
+        font-size: 0.8rem;
       }
 
       /* ISS Information Section */
@@ -573,6 +754,21 @@
           height: 50vh;
         }
 
+        .control-panel {
+          top: 10px;
+          right: 10px;
+          padding: 0.5rem;
+        }
+
+        .control-panel h3 {
+          font-size: 0.9rem;
+        }
+
+        .control-panel button {
+          padding: 0.3rem 0.6rem;
+          font-size: 0.8rem;
+        }
+
         .historical-form {
           flex-direction: column;
         }
@@ -594,6 +790,15 @@
 
         .data-value {
           font-size: 1.4rem;
+        }
+
+        .crew-grid {
+          grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+        }
+
+        .city-selector {
+          flex-direction: column;
+          align-items: center;
         }
 
         .iss-info {
@@ -622,6 +827,14 @@
       <section id="globe-container">
         <div id="globe"></div>
         <div class="loading" id="loading"></div>
+
+        <!-- Control Panel -->
+        <div class="control-panel">
+          <h3>View Options</h3>
+          <button id="toggle-orbit" class="active">Show Orbit</button>
+          <button id="toggle-trail">Show Trail</button>
+          <button id="toggle-labels">Show Labels</button>
+        </div>
       </section>
 
       <!-- Historical Data Section -->
@@ -676,6 +889,29 @@
           <h3>Last Update</h3>
           <div class="data-value" id="lastupdate">--</div>
           <div class="data-unit">seconds ago</div>
+        </div>
+      </section>
+
+      <!-- Crew Section -->
+      <section class="crew-section">
+        <h2>Current ISS Crew</h2>
+        <div class="crew-grid" id="crew-grid">
+          <!-- Crew members will be dynamically added here -->
+        </div>
+      </section>
+
+      <!-- Passes Section -->
+      <section class="passes-section">
+        <h2>Upcoming ISS Passes</h2>
+        <div class="city-selector">
+          <button class="city-btn active" data-city="new-york">New York</button>
+          <button class="city-btn" data-city="london">London</button>
+          <button class="city-btn" data-city="tokyo">Tokyo</button>
+          <button class="city-btn" data-city="sydney">Sydney</button>
+          <button class="city-btn" data-city="moscow">Moscow</button>
+        </div>
+        <div class="passes-list" id="passes-list">
+          <!-- Passes will be dynamically added here -->
         </div>
       </section>
 
@@ -799,7 +1035,7 @@
 
     <script>
       // Global variables
-      let scene, camera, renderer, earth, iss, issOrbit;
+      let scene, camera, renderer, earth, iss, issOrbit, issTrail;
       let issPosition = { lat: 0, lng: 0, alt: 408 };
       let lastUpdateTime = Date.now();
       let earthRotation = 0;
@@ -807,6 +1043,21 @@
       let isHistoricalData = false;
       let historicalTimestamp = null;
       let updateInterval;
+      let trailPoints = [];
+      let showOrbit = true;
+      let showTrail = false;
+      let showLabels = false;
+
+      // City coordinates for ISS passes
+      const cities = {
+        "new-york": { lat: 40.7128, lng: -74.006, name: "New York" },
+        london: { lat: 51.5074, lng: -0.1278, name: "London" },
+        tokyo: { lat: 35.6762, lng: 139.6503, name: "Tokyo" },
+        sydney: { lat: -33.8688, lng: 151.2093, name: "Sydney" },
+        moscow: { lat: 55.7558, lng: 37.6173, name: "Moscow" },
+      };
+
+      let selectedCity = "new-york";
 
       // Initialize Three.js scene
       function initGlobe() {
@@ -882,6 +1133,9 @@
         // Create ISS orbit line
         createOrbitLine();
 
+        // Create ISS trail
+        createTrailLine();
+
         // Add controls
         addControls();
 
@@ -892,62 +1146,57 @@
         animate();
       }
 
-      // Create ISS model
+      // Create ISS model (increased size)
       function createISSModel() {
         iss = new THREE.Group();
 
-        // ISS body
-        const bodyGeometry = new THREE.BoxGeometry(0.03, 0.01, 0.01);
+        // ISS body (increased size)
+        const bodyGeometry = new THREE.BoxGeometry(0.12, 0.04, 0.04);
         const bodyMaterial = new THREE.MeshPhongMaterial({ color: 0xcccccc });
         const body = new THREE.Mesh(bodyGeometry, bodyMaterial);
         iss.add(body);
 
-        // Solar panels
-        const panelGeometry = new THREE.BoxGeometry(0.08, 0.001, 0.02);
+        // Solar panels (increased size)
+        const panelGeometry = new THREE.BoxGeometry(0.32, 0.004, 0.08);
         const panelMaterial = new THREE.MeshPhongMaterial({ color: 0x0000ff });
 
         const leftPanel = new THREE.Mesh(panelGeometry, panelMaterial);
-        leftPanel.position.x = -0.04;
+        leftPanel.position.x = -0.16;
         iss.add(leftPanel);
 
         const rightPanel = new THREE.Mesh(panelGeometry, panelMaterial);
-        rightPanel.position.x = 0.04;
+        rightPanel.position.x = 0.16;
         iss.add(rightPanel);
 
-        // Radiators
-        const radiatorGeometry = new THREE.BoxGeometry(0.02, 0.001, 0.015);
+        // Radiators (increased size)
+        const radiatorGeometry = new THREE.BoxGeometry(0.08, 0.004, 0.06);
         const radiatorMaterial = new THREE.MeshPhongMaterial({
           color: 0x888888,
         });
 
         const leftRadiator = new THREE.Mesh(radiatorGeometry, radiatorMaterial);
-        leftRadiator.position.set(-0.025, 0, 0.01);
+        leftRadiator.position.set(-0.1, 0, 0.04);
         iss.add(leftRadiator);
 
         const rightRadiator = new THREE.Mesh(
           radiatorGeometry,
           radiatorMaterial
         );
-        rightRadiator.position.set(0.025, 0, 0.01);
+        rightRadiator.position.set(0.1, 0, 0.04);
         iss.add(rightRadiator);
 
-        // Modules
-        const moduleGeometry = new THREE.CylinderGeometry(
-          0.005,
-          0.005,
-          0.015,
-          8
-        );
+        // Modules (increased size)
+        const moduleGeometry = new THREE.CylinderGeometry(0.02, 0.02, 0.06, 8);
         const moduleMaterial = new THREE.MeshPhongMaterial({ color: 0xffffff });
 
         const module1 = new THREE.Mesh(moduleGeometry, moduleMaterial);
         module1.rotation.z = Math.PI / 2;
-        module1.position.y = 0.008;
+        module1.position.y = 0.032;
         iss.add(module1);
 
         const module2 = new THREE.Mesh(moduleGeometry, moduleMaterial);
         module2.rotation.z = Math.PI / 2;
-        module2.position.y = -0.008;
+        module2.position.y = -0.032;
         iss.add(module2);
 
         // Add ISS to scene
@@ -980,6 +1229,21 @@
         orbitGeometry.setFromPoints(orbitPoints);
         issOrbit = new THREE.Line(orbitGeometry, orbitMaterial);
         scene.add(issOrbit);
+      }
+
+      // Create ISS trail line
+      function createTrailLine() {
+        const trailGeometry = new THREE.BufferGeometry();
+        const trailMaterial = new THREE.LineBasicMaterial({
+          color: 0x00ff00,
+          transparent: true,
+          opacity: 0.7,
+        });
+
+        trailGeometry.setFromPoints(trailPoints);
+        issTrail = new THREE.Line(trailGeometry, trailMaterial);
+        issTrail.visible = false;
+        scene.add(issTrail);
       }
 
       // Add controls for globe interaction
@@ -1020,6 +1284,30 @@
           camera.position.z += e.deltaY * 0.001;
           camera.position.z = Math.min(Math.max(camera.position.z, 1.5), 5);
         });
+
+        // Control panel buttons
+        document
+          .getElementById("toggle-orbit")
+          .addEventListener("click", function () {
+            showOrbit = !showOrbit;
+            issOrbit.visible = showOrbit;
+            this.classList.toggle("active");
+          });
+
+        document
+          .getElementById("toggle-trail")
+          .addEventListener("click", function () {
+            showTrail = !showTrail;
+            issTrail.visible = showTrail;
+            this.classList.toggle("active");
+          });
+
+        document
+          .getElementById("toggle-labels")
+          .addEventListener("click", function () {
+            showLabels = !showLabels;
+            this.classList.toggle("active");
+          });
       }
 
       // Animation loop
@@ -1032,6 +1320,11 @@
 
         // Update ISS position
         updateISSPosition();
+
+        // Update trail
+        if (showTrail && !isHistoricalData) {
+          updateTrail();
+        }
 
         renderer.render(scene, camera);
       }
@@ -1064,6 +1357,20 @@
             iss.position.z + Math.sin(issRotation + 0.1)
           );
         }
+      }
+
+      // Update ISS trail
+      function updateTrail() {
+        // Add current position to trail
+        trailPoints.push(iss.position.clone());
+
+        // Limit trail length
+        if (trailPoints.length > 100) {
+          trailPoints.shift();
+        }
+
+        // Update trail geometry
+        issTrail.geometry.setFromPoints(trailPoints);
       }
 
       // Fetch ISS data from API
@@ -1127,6 +1434,99 @@
         }
       }
 
+      // Fetch ISS crew data
+      async function fetchCrewData() {
+        try {
+          const response = await fetch(
+            "http://api.open-notify.org/astros.json"
+          );
+          const data = await response.json();
+
+          const crewGrid = document.getElementById("crew-grid");
+          crewGrid.innerHTML = "";
+
+          data.people.forEach((person) => {
+            if (person.craft === "ISS") {
+              const crewMember = document.createElement("div");
+              crewMember.className = "crew-member";
+
+              const avatar = document.createElement("div");
+              avatar.className = "crew-avatar";
+              avatar.innerHTML = '<i class="fas fa-user-astronaut"></i>';
+
+              const name = document.createElement("div");
+              name.className = "crew-name";
+              name.textContent = person.name;
+
+              const craft = document.createElement("div");
+              craft.className = "crew-craft";
+              craft.textContent = person.craft;
+
+              crewMember.appendChild(avatar);
+              crewMember.appendChild(name);
+              crewMember.appendChild(craft);
+
+              crewGrid.appendChild(crewMember);
+            }
+          });
+        } catch (error) {
+          console.error("Error fetching crew data:", error);
+          document.getElementById("crew-grid").innerHTML =
+            "<p>Unable to load crew data.</p>";
+        }
+      }
+
+      // Calculate ISS passes for selected city
+      function calculateISSPasses(city) {
+        const passesList = document.getElementById("passes-list");
+        passesList.innerHTML = "<p>Calculating passes...</p>";
+
+        // Simulate ISS passes (in a real app, you would use an API)
+        setTimeout(() => {
+          passesList.innerHTML = "";
+
+          // Generate some sample passes
+          const now = new Date();
+          const passes = [];
+
+          for (let i = 0; i < 5; i++) {
+            const passTime = new Date(now.getTime() + i * 92 * 60 * 1000); // Approximate orbit time
+            const duration = Math.floor(Math.random() * 5) + 3; // 3-7 minutes
+
+            passes.push({
+              time: passTime,
+              duration: duration,
+              visible: Math.random() > 0.3, // 70% chance of being visible
+            });
+          }
+
+          passes.forEach((pass) => {
+            const passItem = document.createElement("div");
+            passItem.className = "pass-item";
+
+            const passTime = document.createElement("div");
+            passTime.className = "pass-time";
+            passTime.textContent = pass.time.toLocaleString();
+
+            const passDuration = document.createElement("div");
+            passDuration.className = "pass-duration";
+            passDuration.textContent = `${pass.duration} min`;
+
+            const passVisibility = document.createElement("div");
+            passVisibility.className = "pass-visibility";
+            passVisibility.textContent = pass.visible
+              ? "Visible"
+              : "Not Visible";
+
+            passItem.appendChild(passTime);
+            passItem.appendChild(passDuration);
+            passItem.appendChild(passVisibility);
+
+            passesList.appendChild(passItem);
+          });
+        }, 1000);
+      }
+
       // Initialize historical data form
       function initHistoricalForm() {
         const form = document.getElementById("historical-form");
@@ -1161,6 +1561,10 @@
           isHistoricalData = true;
           historicalTimestamp = timestamp;
 
+          // Clear trail when viewing historical data
+          trailPoints = [];
+          issTrail.geometry.setFromPoints(trailPoints);
+
           // Fetch historical data
           await fetchISSData(timestamp);
         });
@@ -1179,6 +1583,30 @@
           dateInput.value = now.toISOString().split("T")[0];
           timeInput.value = now.toTimeString().slice(0, 5);
         });
+      }
+
+      // Initialize city selector
+      function initCitySelector() {
+        const cityButtons = document.querySelectorAll(".city-btn");
+
+        cityButtons.forEach((button) => {
+          button.addEventListener("click", () => {
+            // Remove active class from all buttons
+            cityButtons.forEach((btn) => btn.classList.remove("active"));
+
+            // Add active class to clicked button
+            button.classList.add("active");
+
+            // Update selected city
+            selectedCity = button.dataset.city;
+
+            // Calculate passes for selected city
+            calculateISSPasses(cities[selectedCity]);
+          });
+        });
+
+        // Calculate passes for default city
+        calculateISSPasses(cities[selectedCity]);
       }
 
       // Handle window resize
@@ -1255,13 +1683,18 @@
       window.addEventListener("load", () => {
         initGlobe();
         fetchISSData();
+        fetchCrewData();
         initHistoricalForm();
+        initCitySelector();
         initContactModal();
         initSubscriptionForm();
         initJoinButton();
 
         // Start live updates
-        updateInterval = setInterval(fetchISSData, 5000);
+        updateInterval = setInterval(fetchISSData, 1000);
+
+        // Update crew data every hour
+        setInterval(fetchCrewData, 3600000);
 
         // Update last update time every second (only for live data)
         setInterval(() => {
