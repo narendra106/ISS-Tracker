@@ -112,6 +112,85 @@
         height: 100%;
       }
 
+      /* Historical Data Section */
+      .historical-section {
+        padding: 2rem 5%;
+        max-width: 1200px;
+        margin: 0 auto;
+        background-color: var(--light-bg);
+        border-radius: 10px;
+        margin-bottom: 2rem;
+      }
+
+      .historical-section h2 {
+        font-family: "Montserrat", sans-serif;
+        margin-bottom: 1.5rem;
+        color: var(--primary-color);
+        text-align: center;
+      }
+
+      .historical-form {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 1rem;
+        justify-content: center;
+        align-items: center;
+      }
+
+      .form-group {
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+      }
+
+      .form-group label {
+        font-weight: 500;
+        color: var(--secondary-text);
+      }
+
+      .form-group input {
+        padding: 0.7rem;
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        border-radius: 5px;
+        background-color: var(--dark-bg);
+        color: white;
+        font-family: "Roboto", sans-serif;
+      }
+
+      .form-buttons {
+        display: flex;
+        gap: 1rem;
+        align-items: flex-end;
+      }
+
+      .form-buttons button {
+        padding: 0.7rem 1.5rem;
+        border: none;
+        border-radius: 5px;
+        font-weight: 500;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        font-family: "Montserrat", sans-serif;
+      }
+
+      .submit-btn {
+        background-color: var(--primary-color);
+        color: white;
+      }
+
+      .submit-btn:hover {
+        background-color: var(--hover-color);
+      }
+
+      .reset-btn {
+        background-color: var(--accent-color);
+        color: white;
+      }
+
+      .reset-btn:hover {
+        background-color: #e64a19;
+      }
+
       /* Data Display Section */
       .data-container {
         display: grid;
@@ -130,11 +209,29 @@
         box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
         transition: transform 0.3s ease, box-shadow 0.3s ease;
         animation: fadeIn 0.8s ease-out;
+        position: relative;
       }
 
       .data-card:hover {
         transform: translateY(-5px);
         box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+      }
+
+      .data-card.historical {
+        border: 2px solid var(--accent-color);
+      }
+
+      .data-card.historical::before {
+        content: "Historical Data";
+        position: absolute;
+        top: -10px;
+        right: 10px;
+        background-color: var(--accent-color);
+        color: white;
+        padding: 0.2rem 0.8rem;
+        border-radius: 20px;
+        font-size: 0.7rem;
+        font-weight: 600;
       }
 
       .data-card h3 {
@@ -476,6 +573,15 @@
           height: 50vh;
         }
 
+        .historical-form {
+          flex-direction: column;
+        }
+
+        .form-buttons {
+          width: 100%;
+          justify-content: center;
+        }
+
         .data-container {
           grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
           padding: 1rem 3%;
@@ -518,34 +624,55 @@
         <div class="loading" id="loading"></div>
       </section>
 
+      <!-- Historical Data Section -->
+      <section class="historical-section">
+        <h2>Historical & Future ISS Data</h2>
+        <form class="historical-form" id="historical-form">
+          <div class="form-group">
+            <label for="date-input">Date</label>
+            <input type="date" id="date-input" required />
+          </div>
+          <div class="form-group">
+            <label for="time-input">Time (UTC)</label>
+            <input type="time" id="time-input" required />
+          </div>
+          <div class="form-buttons">
+            <button type="submit" class="submit-btn">Get ISS Data</button>
+            <button type="button" class="reset-btn" id="reset-btn">
+              Reset to Live
+            </button>
+          </div>
+        </form>
+      </section>
+
       <!-- Real-time Data Display -->
       <section class="data-container">
-        <div class="data-card">
+        <div class="data-card" id="longitude-card">
           <h3>Longitude</h3>
           <div class="data-value" id="longitude">--</div>
           <div class="data-unit">degrees</div>
         </div>
-        <div class="data-card">
+        <div class="data-card" id="latitude-card">
           <h3>Latitude</h3>
           <div class="data-value" id="latitude">--</div>
           <div class="data-unit">degrees</div>
         </div>
-        <div class="data-card">
+        <div class="data-card" id="altitude-card">
           <h3>Altitude</h3>
           <div class="data-value" id="altitude">--</div>
           <div class="data-unit">km</div>
         </div>
-        <div class="data-card">
+        <div class="data-card" id="velocity-card">
           <h3>Velocity</h3>
           <div class="data-value" id="velocity">--</div>
           <div class="data-unit">km/h</div>
         </div>
-        <div class="data-card">
+        <div class="data-card" id="datetime-card">
           <h3>Date & Time</h3>
           <div class="data-value" id="datetime">--</div>
           <div class="data-unit">UTC</div>
         </div>
-        <div class="data-card">
+        <div class="data-card" id="lastupdate-card">
           <h3>Last Update</h3>
           <div class="data-value" id="lastupdate">--</div>
           <div class="data-unit">seconds ago</div>
@@ -677,6 +804,9 @@
       let lastUpdateTime = Date.now();
       let earthRotation = 0;
       let issRotation = 0;
+      let isHistoricalData = false;
+      let historicalTimestamp = null;
+      let updateInterval;
 
       // Initialize Three.js scene
       function initGlobe() {
@@ -937,15 +1067,14 @@
       }
 
       // Fetch ISS data from API
-      async function fetchISSData() {
+      async function fetchISSData(timestamp = null) {
         try {
-          // Using the provided API key
-          const apiKey = "4UMVLvriEZibWP6Eo62RzAwodfS1AY3hz62JmMbQ";
+          let url = `https://api.wheretheiss.at/v1/satellites/25544`;
+          if (timestamp) {
+            url += `?timestamp=${timestamp}`;
+          }
 
-          // Fetch current ISS position
-          const positionResponse = await fetch(
-            `https://api.wheretheiss.at/v1/satellites/25544`
-          );
+          const positionResponse = await fetch(url);
           const positionData = await positionResponse.json();
 
           // Update position data
@@ -960,25 +1089,96 @@
             positionData.latitude.toFixed(4);
           document.getElementById("altitude").textContent =
             positionData.altitude.toFixed(2);
-          document.getElementById("velocity").textContent = (
-            positionData.velocity * 3.6
-          ).toFixed(2); // Convert km/s to km/h
+
+          // Correct velocity calculation: API returns km/s, convert to km/h
+          const velocityKmh = (positionData.velocity * 3.6).toFixed(2);
+          document.getElementById("velocity").textContent = velocityKmh;
 
           // Update date and time
-          const now = new Date();
-          document.getElementById("datetime").textContent = now.toUTCString();
+          const timestampDate = new Date(positionData.timestamp * 1000);
+          document.getElementById("datetime").textContent =
+            timestampDate.toUTCString();
 
           // Update last update time
-          const secondsSinceUpdate = Math.floor(
-            (Date.now() - lastUpdateTime) / 1000
-          );
-          document.getElementById("lastupdate").textContent =
-            secondsSinceUpdate;
+          if (timestamp) {
+            document.getElementById("lastupdate").textContent =
+              "Historical Data";
+          } else {
+            const secondsSinceUpdate = Math.floor(
+              (Date.now() - lastUpdateTime) / 1000
+            );
+            document.getElementById("lastupdate").textContent =
+              secondsSinceUpdate;
+            lastUpdateTime = Date.now();
+          }
 
-          lastUpdateTime = Date.now();
+          // Update card styles for historical data
+          const cards = document.querySelectorAll(".data-card");
+          cards.forEach((card) => {
+            if (timestamp) {
+              card.classList.add("historical");
+            } else {
+              card.classList.remove("historical");
+            }
+          });
         } catch (error) {
           console.error("Error fetching ISS data:", error);
+          alert("Error fetching ISS data. Please try again.");
         }
+      }
+
+      // Initialize historical data form
+      function initHistoricalForm() {
+        const form = document.getElementById("historical-form");
+        const resetBtn = document.getElementById("reset-btn");
+
+        // Set default date and time to current
+        const now = new Date();
+        const dateInput = document.getElementById("date-input");
+        const timeInput = document.getElementById("time-input");
+
+        dateInput.value = now.toISOString().split("T")[0];
+        timeInput.value = now.toTimeString().slice(0, 5);
+
+        form.addEventListener("submit", async (e) => {
+          e.preventDefault();
+
+          const dateValue = dateInput.value;
+          const timeValue = timeInput.value;
+
+          // Combine date and time
+          const dateTimeString = `${dateValue}T${timeValue}:00Z`;
+          const timestamp = Math.floor(
+            new Date(dateTimeString).getTime() / 1000
+          );
+
+          // Clear live update interval
+          if (updateInterval) {
+            clearInterval(updateInterval);
+          }
+
+          // Set historical mode
+          isHistoricalData = true;
+          historicalTimestamp = timestamp;
+
+          // Fetch historical data
+          await fetchISSData(timestamp);
+        });
+
+        resetBtn.addEventListener("click", () => {
+          // Reset to live data
+          isHistoricalData = false;
+          historicalTimestamp = null;
+
+          // Restart live updates
+          fetchISSData();
+          updateInterval = setInterval(fetchISSData, 5000);
+
+          // Reset form to current time
+          const now = new Date();
+          dateInput.value = now.toISOString().split("T")[0];
+          timeInput.value = now.toTimeString().slice(0, 5);
+        });
       }
 
       // Handle window resize
@@ -1055,20 +1255,23 @@
       window.addEventListener("load", () => {
         initGlobe();
         fetchISSData();
+        initHistoricalForm();
         initContactModal();
         initSubscriptionForm();
         initJoinButton();
 
-        // Fetch ISS data every 5 seconds
-        setInterval(fetchISSData, 5000);
+        // Start live updates
+        updateInterval = setInterval(fetchISSData, 5000);
 
-        // Update last update time every second
+        // Update last update time every second (only for live data)
         setInterval(() => {
-          const secondsSinceUpdate = Math.floor(
-            (Date.now() - lastUpdateTime) / 1000
-          );
-          document.getElementById("lastupdate").textContent =
-            secondsSinceUpdate;
+          if (!isHistoricalData) {
+            const secondsSinceUpdate = Math.floor(
+              (Date.now() - lastUpdateTime) / 1000
+            );
+            document.getElementById("lastupdate").textContent =
+              secondsSinceUpdate;
+          }
         }, 1000);
       });
 
