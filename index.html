@@ -803,11 +803,6 @@
         <!-- BLOCK 6: EARTHQUAKES -->
         <div class="data-card">
           <div class="block-title">Recent Earthquakes</div>
-          <div class="earthquake-controls">
-            <button id="eq-day" class="active">Past 24 Hours</button>
-            <button id="eq-week">Past 7 Days</button>
-            <button id="eq-month">Past 30 Days</button>
-          </div>
           <div class="earthquake-list" id="earthquake-list">
             <div class="loading" style="position: relative; margin-top: 20px">
               <div
@@ -919,8 +914,6 @@
           .addEventListener("click", saveUserProfile);
         // Fetch earthquake data
         fetchEarthquakeData("day");
-        // Set up earthquake controls
-        setupEarthquakeControls();
         // Hide loading screen
         setTimeout(() => {
           document.getElementById("loading").style.display = "none";
@@ -1787,24 +1780,9 @@
         // Clear existing earthquake markers
         clearEarthquakeMarkers();
 
-        let url;
-        switch (timeframe) {
-          case "day":
-            url =
-              "https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_day.geojson";
-            break;
-          case "week":
-            url =
-              "https://earthquake.usgs.org/earthquakes/feed/v1.0/summary/all_week.geojson";
-            break;
-          case "month":
-            url =
-              "https://earthquake.usgs.org/earthquakes/feed/v1.0/summary/all_month.geojson";
-            break;
-          default:
-            url =
-              "https://earthquake.usgs.org/earthquakes/feed/v1.0/summary/all_day.geojson";
-        }
+        // Always use 'day' timeframe since we removed the other options
+        const url =
+          "https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_day.geojson";
 
         fetch(url)
           .then((response) => response.json())
@@ -1857,7 +1835,7 @@
 
         if (earthquakes.length === 0) {
           earthquakeList.innerHTML =
-            "<p>No earthquakes recorded in this timeframe.</p>";
+            "<p>No earthquakes recorded in the past 24 hours.</p>";
         }
       }
 
@@ -1943,37 +1921,6 @@
         }
 
         animateCamera();
-      }
-
-      // Setup earthquake timeframe controls
-      function setupEarthquakeControls() {
-        const dayBtn = document.getElementById("eq-day");
-        const weekBtn = document.getElementById("eq-week");
-        const monthBtn = document.getElementById("eq-month");
-
-        dayBtn.addEventListener("click", () => {
-          setActiveEarthquakeButton(dayBtn);
-          fetchEarthquakeData("day");
-        });
-
-        weekBtn.addEventListener("click", () => {
-          setActiveEarthquakeButton(weekBtn);
-          fetchEarthquakeData("week");
-        });
-
-        monthBtn.addEventListener("click", () => {
-          setActiveEarthquakeButton(monthBtn);
-          fetchEarthquakeData("month");
-        });
-      }
-
-      // Set active earthquake button
-      function setActiveEarthquakeButton(activeBtn) {
-        const buttons = document.querySelectorAll(
-          ".earthquake-controls button"
-        );
-        buttons.forEach((btn) => btn.classList.remove("active"));
-        activeBtn.classList.add("active");
       }
 
       // Animation loop
