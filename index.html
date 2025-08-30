@@ -12,26 +12,22 @@
         padding: 0;
         box-sizing: border-box;
       }
-
       body {
         font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
         background-color: #0a0e27;
         color: #e0e6ed;
         overflow: hidden;
       }
-
       .container {
         display: flex;
         height: 100vh;
         position: relative;
       }
-
       .globe-container {
         flex: 0 0 70%;
         position: relative;
         height: 100vh;
       }
-
       .sidebar {
         flex: 0 0 30%;
         background-color: rgba(15, 23, 42, 0.85);
@@ -44,13 +40,11 @@
         z-index: 10;
         height: 100vh;
       }
-
       .logo {
         display: flex;
         align-items: center;
         margin-bottom: 25px;
       }
-
       .logo-icon {
         width: 40px;
         height: 40px;
@@ -61,7 +55,6 @@
         justify-content: center;
         margin-right: 12px;
       }
-
       .logo h1 {
         font-size: 22px;
         font-weight: 700;
@@ -70,7 +63,6 @@
         background-clip: text;
         color: transparent;
       }
-
       .data-card {
         background-color: rgba(30, 41, 59, 0.7);
         border-radius: 12px;
@@ -78,7 +70,6 @@
         margin-bottom: 20px;
         border: 1px solid rgba(100, 116, 139, 0.2);
       }
-
       .data-card h2 {
         font-size: 16px;
         font-weight: 600;
@@ -87,7 +78,6 @@
         display: flex;
         align-items: center;
       }
-
       .data-card h2::before {
         content: "";
         display: inline-block;
@@ -97,23 +87,19 @@
         border-radius: 50%;
         margin-right: 8px;
       }
-
       .data-item {
         display: flex;
         justify-content: space-between;
         margin-bottom: 12px;
         font-size: 14px;
       }
-
       .data-label {
         color: #94a3b8;
       }
-
       .data-value {
         font-weight: 600;
         color: #e2e8f0;
       }
-
       .prediction-form {
         background-color: rgba(30, 41, 59, 0.7);
         border-radius: 12px;
@@ -121,25 +107,21 @@
         margin-bottom: 20px;
         border: 1px solid rgba(100, 116, 139, 0.2);
       }
-
       .prediction-form h2 {
         font-size: 16px;
         font-weight: 600;
         margin-bottom: 15px;
         color: #94a3b8;
       }
-
       .form-group {
         margin-bottom: 15px;
       }
-
       .form-group label {
         display: block;
         margin-bottom: 6px;
         font-size: 14px;
         color: #94a3b8;
       }
-
       .form-group input {
         width: 100%;
         padding: 10px 12px;
@@ -149,13 +131,11 @@
         color: #e2e8f0;
         font-size: 14px;
       }
-
       .form-group input:focus {
         outline: none;
         border-color: #3b82f6;
         box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.2);
       }
-
       .btn {
         background: linear-gradient(90deg, #3b82f6, #8b5cf6);
         color: white;
@@ -168,12 +148,10 @@
         width: 100%;
         transition: all 0.3s ease;
       }
-
       .btn:hover {
         transform: translateY(-2px);
         box-shadow: 0 5px 15px rgba(59, 130, 246, 0.4);
       }
-
       .prediction-result {
         margin-top: 15px;
         padding: 12px;
@@ -182,21 +160,17 @@
         font-size: 14px;
         display: none;
       }
-
       .prediction-result.active {
         display: block;
       }
-
       .prediction-result h3 {
         font-size: 14px;
         margin-bottom: 8px;
         color: #94a3b8;
       }
-
       .prediction-result p {
         margin-bottom: 5px;
       }
-
       .status-indicator {
         display: inline-block;
         width: 10px;
@@ -206,7 +180,6 @@
         margin-right: 8px;
         animation: pulse 2s infinite;
       }
-
       @keyframes pulse {
         0% {
           box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7);
@@ -218,7 +191,6 @@
           box-shadow: 0 0 0 0 rgba(16, 185, 129, 0);
         }
       }
-
       .loading {
         position: absolute;
         top: 50%;
@@ -227,7 +199,6 @@
         text-align: center;
         z-index: 100;
       }
-
       .loading-spinner {
         border: 3px solid rgba(255, 255, 255, 0.1);
         border-radius: 50%;
@@ -237,7 +208,6 @@
         animation: spin 1s linear infinite;
         margin: 0 auto 15px;
       }
-
       @keyframes spin {
         0% {
           transform: rotate(0deg);
@@ -246,11 +216,9 @@
           transform: rotate(360deg);
         }
       }
-
       .loading p {
         color: #94a3b8;
       }
-
       .block-title {
         font-size: 18px;
         font-weight: 700;
@@ -260,17 +228,331 @@
         padding-bottom: 10px;
         border-bottom: 1px solid rgba(100, 116, 139, 0.3);
       }
-
+      .earthquake-list {
+        max-height: 300px;
+        overflow-y: auto;
+        margin-top: 10px;
+      }
+      .earthquake-item {
+        padding: 10px;
+        margin-bottom: 8px;
+        background-color: rgba(15, 23, 42, 0.5);
+        border-radius: 6px;
+        border-left: 3px solid #ef4444;
+        font-size: 13px;
+        cursor: pointer;
+        transition: all 0.2s ease;
+      }
+      .earthquake-item:hover {
+        background-color: rgba(30, 41, 59, 0.7);
+        transform: translateX(5px);
+      }
+      .earthquake-magnitude {
+        font-weight: bold;
+        color: #f87171;
+      }
+      .earthquake-place {
+        display: block;
+        margin-top: 4px;
+        color: #cbd5e1;
+      }
+      .earthquake-time {
+        display: block;
+        margin-top: 4px;
+        font-size: 12px;
+        color: #94a3b8;
+      }
+      .earthquake-controls {
+        display: flex;
+        margin-top: 10px;
+        gap: 10px;
+      }
+      .earthquake-controls button {
+        flex: 1;
+        padding: 8px;
+        background-color: rgba(59, 130, 246, 0.2);
+        border: 1px solid rgba(59, 130, 246, 0.4);
+        border-radius: 4px;
+        color: #93c5fd;
+        font-size: 12px;
+        cursor: pointer;
+        transition: all 0.2s ease;
+      }
+      .earthquake-controls button:hover {
+        background-color: rgba(59, 130, 246, 0.3);
+      }
+      .earthquake-controls button.active {
+        background-color: rgba(59, 130, 246, 0.5);
+        color: white;
+      }
+      .astronaut-list {
+        max-height: 300px;
+        overflow-y: auto;
+        margin-top: 10px;
+      }
+      .astronaut-item {
+        padding: 12px;
+        margin-bottom: 10px;
+        background-color: rgba(15, 23, 42, 0.5);
+        border-radius: 8px;
+        border-left: 3px solid #3b82f6;
+        transition: all 0.2s ease;
+      }
+      .astronaut-item:hover {
+        background-color: rgba(30, 41, 59, 0.7);
+        transform: translateX(5px);
+      }
+      .astronaut-name {
+        font-weight: 600;
+        font-size: 16px;
+        margin-bottom: 5px;
+        color: #e2e8f0;
+      }
+      .astronaut-details {
+        display: flex;
+        flex-direction: column;
+        gap: 4px;
+        font-size: 13px;
+      }
+      .astronaut-detail {
+        display: flex;
+        justify-content: space-between;
+      }
+      .astronaut-detail-label {
+        color: #94a3b8;
+      }
+      .astronaut-detail-value {
+        color: #cbd5e1;
+        font-weight: 500;
+      }
+      .flag-icon {
+        width: 16px;
+        height: 12px;
+        display: inline-block;
+        margin-right: 5px;
+        vertical-align: middle;
+      }
+      .refresh-btn {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 5px;
+        margin-top: 10px;
+        padding: 8px;
+        background-color: rgba(59, 130, 246, 0.2);
+        border: 1px solid rgba(59, 130, 246, 0.4);
+        border-radius: 4px;
+        color: #93c5fd;
+        font-size: 12px;
+        cursor: pointer;
+        transition: all 0.2s ease;
+      }
+      .refresh-btn:hover {
+        background-color: rgba(59, 130, 246, 0.3);
+      }
+      .refresh-icon {
+        width: 14px;
+        height: 14px;
+        animation: spin 2s linear infinite;
+      }
+      .no-astronauts {
+        text-align: center;
+        padding: 15px;
+        color: #94a3b8;
+        font-style: italic;
+      }
+      .api-error {
+        text-align: center;
+        padding: 15px;
+        color: #f87171;
+        font-style: italic;
+      }
+      .api-source {
+        font-size: 11px;
+        color: #64748b;
+        text-align: right;
+        margin-top: 5px;
+        font-style: italic;
+      }
+      .astronaut-count {
+        text-align: center;
+        margin-bottom: 10px;
+        font-size: 14px;
+        color: #94a3b8;
+      }
+      .astronaut-count strong {
+        color: #3b82f6;
+      }
+      .leaderboard-list {
+        max-height: 300px;
+        overflow-y: auto;
+        margin-top: 10px;
+      }
+      .leaderboard-item {
+        display: flex;
+        align-items: center;
+        padding: 12px;
+        margin-bottom: 8px;
+        background-color: rgba(15, 23, 42, 0.5);
+        border-radius: 8px;
+        transition: all 0.2s ease;
+      }
+      .leaderboard-item:hover {
+        background-color: rgba(30, 41, 59, 0.7);
+        transform: translateX(5px);
+      }
+      .leaderboard-rank {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 24px;
+        height: 24px;
+        border-radius: 50%;
+        font-weight: bold;
+        margin-right: 12px;
+        font-size: 14px;
+      }
+      .rank-1 {
+        background: linear-gradient(135deg, #ffd700, #ffa500);
+        color: #0a0e27;
+      }
+      .rank-2 {
+        background: linear-gradient(135deg, #c0c0c0, #808080);
+        color: #0a0e27;
+      }
+      .rank-3 {
+        background: linear-gradient(135deg, #cd7f32, #8b4513);
+        color: #0a0e27;
+      }
+      .rank-other {
+        background-color: rgba(59, 130, 246, 0.2);
+        color: #93c5fd;
+      }
+      .leaderboard-info {
+        flex: 1;
+      }
+      .leaderboard-name {
+        font-weight: 600;
+        font-size: 15px;
+        color: #e2e8f0;
+      }
+      .leaderboard-details {
+        display: flex;
+        justify-content: space-between;
+        margin-top: 4px;
+        font-size: 12px;
+        color: #94a3b8;
+      }
+      .leaderboard-country {
+        display: flex;
+        align-items: center;
+      }
+      .leaderboard-spots {
+        font-weight: 600;
+        color: #3b82f6;
+      }
+      .spot-iss-btn {
+        position: absolute;
+        bottom: 20px;
+        right: 20px;
+        background: linear-gradient(90deg, #3b82f6, #8b5cf6);
+        color: white;
+        border: none;
+        border-radius: 50px;
+        padding: 12px 24px;
+        font-size: 14px;
+        font-weight: 600;
+        cursor: pointer;
+        box-shadow: 0 4px 12px rgba(59, 130, 246, 0.4);
+        transition: all 0.3s ease;
+        z-index: 50;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
+      .spot-iss-btn:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 6px 16px rgba(59, 130, 246, 0.5);
+      }
+      .spot-iss-btn:active {
+        transform: translateY(-1px);
+      }
+      .notification {
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        background-color: rgba(16, 185, 129, 0.9);
+        color: white;
+        padding: 16px 20px;
+        border-radius: 8px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        z-index: 1000;
+        transform: translateX(400px);
+        transition: transform 0.3s ease;
+        max-width: 300px;
+      }
+      .notification.show {
+        transform: translateX(0);
+      }
+      .notification-title {
+        font-weight: 600;
+        margin-bottom: 4px;
+      }
+      .notification-message {
+        font-size: 14px;
+      }
+      .user-form {
+        margin-bottom: 15px;
+      }
+      .user-form-row {
+        display: flex;
+        gap: 10px;
+        margin-bottom: 10px;
+      }
+      .user-form input,
+      .user-form select {
+        flex: 1;
+        padding: 8px 12px;
+        background-color: rgba(15, 23, 42, 0.7);
+        border: 1px solid rgba(100, 116, 139, 0.3);
+        border-radius: 6px;
+        color: #e2e8f0;
+        font-size: 14px;
+      }
+      .user-form input:focus,
+      .user-form select:focus {
+        outline: none;
+        border-color: #3b82f6;
+        box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.2);
+      }
+      .stats-row {
+        display: flex;
+        justify-content: space-between;
+        margin-top: 15px;
+        padding-top: 15px;
+        border-top: 1px solid rgba(100, 116, 139, 0.2);
+      }
+      .stat-item {
+        text-align: center;
+      }
+      .stat-value {
+        font-size: 18px;
+        font-weight: 700;
+        color: #3b82f6;
+      }
+      .stat-label {
+        font-size: 12px;
+        color: #94a3b8;
+        margin-top: 4px;
+      }
       @media (max-width: 768px) {
         .container {
           flex-direction: column;
         }
-
         .globe-container {
           flex: 0 0 60%;
           height: 60vh;
         }
-
         .sidebar {
           flex: 0 0 40%;
           height: 40vh;
@@ -278,16 +560,20 @@
           border-top: 1px solid rgba(100, 116, 139, 0.3);
         }
       }
-
       @media (max-width: 480px) {
         .globe-container {
           flex: 0 0 50%;
           height: 50vh;
         }
-
         .sidebar {
           flex: 0 0 50%;
           height: 50vh;
+        }
+        .spot-iss-btn {
+          bottom: 10px;
+          right: 10px;
+          padding: 10px 16px;
+          font-size: 12px;
         }
       }
     </style>
@@ -300,8 +586,25 @@
           <div class="loading-spinner"></div>
           <p>Loading Earth and ISS data...</p>
         </div>
+        <button class="spot-iss-btn" id="spot-iss-btn">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="16"
+            height="16"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <path
+              d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"
+            ></path>
+          </svg>
+          Spot ISS
+        </button>
       </div>
-
       <div class="sidebar">
         <div class="logo">
           <div class="logo-icon">
@@ -323,7 +626,6 @@
           </div>
           <h1>ISS Tracker</h1>
         </div>
-
         <!-- BLOCK 1: GLOBE VIEW -->
         <div class="data-card">
           <div class="block-title">Globe View</div>
@@ -358,8 +660,128 @@
             <span class="data-value" id="date">--</span>
           </div>
         </div>
-
-        <!-- BLOCK 2: PREDICTION -->
+        <!-- BLOCK 2: USER INFO -->
+        <div class="data-card">
+          <div class="block-title">Your Profile</div>
+          <div class="user-form">
+            <div class="user-form-row">
+              <input
+                type="text"
+                id="user-name"
+                placeholder="Your name"
+                maxlength="30"
+              />
+            </div>
+            <div class="user-form-row">
+              <select id="user-country">
+                <option value="">Select Country</option>
+                <option value="US">United States</option>
+                <option value="RU">Russia</option>
+                <option value="CN">China</option>
+                <option value="JP">Japan</option>
+                <option value="DE">Germany</option>
+                <option value="FR">France</option>
+                <option value="GB">United Kingdom</option>
+                <option value="IN">India</option>
+                <option value="BR">Brazil</option>
+                <option value="CA">Canada</option>
+                <option value="AU">Australia</option>
+                <option value="IT">Italy</option>
+                <option value="ES">Spain</option>
+                <option value="MX">Mexico</option>
+                <option value="KR">South Korea</option>
+                <option value="NL">Netherlands</option>
+                <option value="SA">Saudi Arabia</option>
+                <option value="TR">Turkey</option>
+                <option value="OTHER">Other</option>
+              </select>
+            </div>
+            <div class="user-form-row">
+              <button class="btn" id="save-user-btn">Save Profile</button>
+            </div>
+          </div>
+          <div class="stats-row">
+            <div class="stat-item">
+              <div class="stat-value" id="user-spots">0</div>
+              <div class="stat-label">Your Spots</div>
+            </div>
+            <div class="stat-item">
+              <div class="stat-value" id="global-spots">0</div>
+              <div class="stat-label">Global Spots</div>
+            </div>
+            <div class="stat-item">
+              <div class="stat-value" id="active-spotters">0</div>
+              <div class="stat-label">Active Spotters</div>
+            </div>
+          </div>
+        </div>
+        <!-- BLOCK 3: LEADERBOARD -->
+        <div class="data-card">
+          <div class="block-title">Global Leaderboard</div>
+          <div class="leaderboard-list" id="leaderboard-list">
+            <div class="loading" style="position: relative; margin-top: 20px">
+              <div
+                class="loading-spinner"
+                style="width: 30px; height: 30px"
+              ></div>
+              <p>Loading leaderboard...</p>
+            </div>
+          </div>
+          <div class="refresh-btn" id="refresh-leaderboard">
+            <svg
+              class="refresh-icon"
+              xmlns="http://www.w3.org/2000/svg"
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <polyline points="23 4 23 10 17 10"></polyline>
+              <path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"></path>
+            </svg>
+            Refresh
+          </div>
+        </div>
+        <!-- BLOCK 4: ASTRONAUTS -->
+        <div class="data-card">
+          <div class="block-title">Astronauts on ISS</div>
+          <div class="astronaut-count" id="astronaut-count">Loading...</div>
+          <div class="astronaut-list" id="astronaut-list">
+            <div class="loading" style="position: relative; margin-top: 20px">
+              <div
+                class="loading-spinner"
+                style="width: 30px; height: 30px"
+              ></div>
+              <p>Loading astronaut data...</p>
+            </div>
+          </div>
+          <div class="api-source" id="api-source">
+            Data source: Open-Notify API
+          </div>
+          <button class="refresh-btn" id="refresh-astronauts">
+            <svg
+              class="refresh-icon"
+              xmlns="http://www.w3.org/2000/svg"
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <polyline points="23 4 23 10 17 10"></polyline>
+              <path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"></path>
+            </svg>
+            Refresh Data
+          </button>
+        </div>
+        <!-- BLOCK 5: PREDICTION -->
         <div class="prediction-form">
           <div class="block-title">Predict ISS Position</div>
           <div class="form-group">
@@ -378,7 +800,24 @@
             </p>
           </div>
         </div>
-
+        <!-- BLOCK 6: EARTHQUAKES -->
+        <div class="data-card">
+          <div class="block-title">Recent Earthquakes</div>
+          <div class="earthquake-controls">
+            <button id="eq-day" class="active">Past 24 Hours</button>
+            <button id="eq-week">Past 7 Days</button>
+            <button id="eq-month">Past 30 Days</button>
+          </div>
+          <div class="earthquake-list" id="earthquake-list">
+            <div class="loading" style="position: relative; margin-top: 20px">
+              <div
+                class="loading-spinner"
+                style="width: 30px; height: 30px"
+              ></div>
+              <p>Loading earthquake data...</p>
+            </div>
+          </div>
+        </div>
         <div class="data-card">
           <h2>About ISS</h2>
           <p style="font-size: 14px; line-height: 1.5; color: #cbd5e1">
@@ -390,19 +829,32 @@
         </div>
       </div>
     </div>
-
+    <div class="notification" id="notification">
+      <div class="notification-title">ISS Spotted!</div>
+      <div class="notification-message">
+        You've successfully spotted the ISS. Check the leaderboard to see your
+        ranking.
+      </div>
+    </div>
     <script>
       // Global variables
       let scene, camera, renderer, globe, iss, controls;
       let issPosition = { lat: 0, lon: 0, alt: 408, vel: 27600 };
       let issPath = [];
       let animationId;
+      let earthquakeMarkers = [];
+      let earthquakeData = [];
+      let earthGroup; // Group to hold Earth and its children (clouds, earthquake markers)
+      let astronautsData = [];
+      let currentUser = null;
+      let leaderboardData = [];
+      let lastSpotTime = 0;
+      const SPOT_COOLDOWN = 60000; // 1 minute cooldown between spots
 
       // Initialize the 3D scene
       function init() {
         // Create scene
         scene = new THREE.Scene();
-
         // Create camera
         camera = new THREE.PerspectiveCamera(
           45,
@@ -411,50 +863,64 @@
           1000
         );
         camera.position.z = 3.5;
-
         // Create renderer
         renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
         renderer.setSize(window.innerWidth, window.innerHeight);
         renderer.setPixelRatio(window.devicePixelRatio);
         document.getElementById("globe").appendChild(renderer.domElement);
-
         // Add controls
         controls = new THREE.OrbitControls(camera, renderer.domElement);
         controls.enableDamping = true;
         controls.dampingFactor = 0.05;
         controls.minDistance = 2.5;
         controls.maxDistance = 12;
-
         // Add ambient light
         const ambientLight = new THREE.AmbientLight(0x333333);
         scene.add(ambientLight);
-
         // Add directional light (sun)
         const sunLight = new THREE.DirectionalLight(0xffffff, 1);
         sunLight.position.set(5, 3, 5);
         scene.add(sunLight);
-
         // Create Earth
         createEarth();
-
         // Create ISS
         createISS();
-
         // Add stars
         createStars();
-
         // Handle window resize
         window.addEventListener("resize", onWindowResize);
-
         // Start animation
         animate();
-
+        // Initialize user data
+        initializeUser();
+        // Load leaderboard data
+        loadLeaderboard();
         // Fetch initial ISS data
         fetchISSData();
-
         // Set up periodic data fetching
         setInterval(fetchISSData, 5000);
-
+        // Fetch astronaut data
+        fetchAstronautData();
+        // Set up astronaut refresh button
+        document
+          .getElementById("refresh-astronauts")
+          .addEventListener("click", fetchAstronautData);
+        // Set up leaderboard refresh button
+        document
+          .getElementById("refresh-leaderboard")
+          .addEventListener("click", loadLeaderboard);
+        // Set up spot ISS button
+        document
+          .getElementById("spot-iss-btn")
+          .addEventListener("click", spotISS);
+        // Set up save user button
+        document
+          .getElementById("save-user-btn")
+          .addEventListener("click", saveUserProfile);
+        // Fetch earthquake data
+        fetchEarthquakeData("day");
+        // Set up earthquake controls
+        setupEarthquakeControls();
         // Hide loading screen
         setTimeout(() => {
           document.getElementById("loading").style.display = "none";
@@ -463,8 +929,11 @@
 
       // Create Earth
       function createEarth() {
-        const geometry = new THREE.SphereGeometry(1, 64, 64);
+        // Create a group to hold Earth and its children
+        earthGroup = new THREE.Group();
+        scene.add(earthGroup);
 
+        const geometry = new THREE.SphereGeometry(1, 64, 64);
         // Load Earth texture
         const textureLoader = new THREE.TextureLoader();
         const earthTexture = textureLoader.load(
@@ -476,7 +945,6 @@
         const specularTexture = textureLoader.load(
           "https://threejs.org/examples/textures/planets/earth_specular_2048.jpg"
         );
-
         const material = new THREE.MeshPhongMaterial({
           map: earthTexture,
           bumpMap: bumpTexture,
@@ -484,10 +952,8 @@
           specularMap: specularTexture,
           specular: new THREE.Color(0x333333),
         });
-
         globe = new THREE.Mesh(geometry, material);
-        scene.add(globe);
-
+        earthGroup.add(globe);
         // Add clouds
         const cloudGeometry = new THREE.SphereGeometry(1.01, 64, 64);
         const cloudTexture = textureLoader.load(
@@ -498,37 +964,30 @@
           transparent: true,
           opacity: 0.3,
         });
-
         const clouds = new THREE.Mesh(cloudGeometry, cloudMaterial);
-        globe.add(clouds);
+        earthGroup.add(clouds);
       }
 
       // Create ISS
       function createISS() {
         const issGroup = new THREE.Group();
-
         // ISS body
         const bodyGeometry = new THREE.BoxGeometry(0.05, 0.02, 0.02);
         const bodyMaterial = new THREE.MeshPhongMaterial({ color: 0xcccccc });
         const body = new THREE.Mesh(bodyGeometry, bodyMaterial);
         issGroup.add(body);
-
         // Solar panels
         const panelGeometry = new THREE.BoxGeometry(0.15, 0.01, 0.04);
         const panelMaterial = new THREE.MeshPhongMaterial({ color: 0x1a5fb4 });
-
         const leftPanel = new THREE.Mesh(panelGeometry, panelMaterial);
         leftPanel.position.x = -0.1;
         issGroup.add(leftPanel);
-
         const rightPanel = new THREE.Mesh(panelGeometry, panelMaterial);
         rightPanel.position.x = 0.1;
         issGroup.add(rightPanel);
-
         // Add a point light to the ISS
         const issLight = new THREE.PointLight(0xffffff, 0.5, 0.2);
         issGroup.add(issLight);
-
         iss = issGroup;
         scene.add(iss);
       }
@@ -541,7 +1000,6 @@
           size: 0.02,
           transparent: true,
         });
-
         const starsVertices = [];
         for (let i = 0; i < 10000; i++) {
           const x = (Math.random() - 0.5) * 2000;
@@ -549,7 +1007,6 @@
           const z = (Math.random() - 0.5) * 2000;
           starsVertices.push(x, y, z);
         }
-
         starsGeometry.setAttribute(
           "position",
           new THREE.Float32BufferAttribute(starsVertices, 3)
@@ -562,22 +1019,18 @@
       function latLonToVector3(lat, lon, radius) {
         const phi = (90 - lat) * (Math.PI / 180);
         const theta = (lon + 180) * (Math.PI / 180);
-
         const x = -(radius * Math.sin(phi) * Math.cos(theta));
         const z = radius * Math.sin(phi) * Math.sin(theta);
         const y = radius * Math.cos(phi);
-
         return new THREE.Vector3(x, y, z);
       }
 
       // Update ISS position
       function updateISSPosition() {
         if (!iss) return;
-
         // Increased distance from Earth (1.5 instead of 1.2)
         const position = latLonToVector3(issPosition.lat, issPosition.lon, 1.5);
         iss.position.copy(position);
-
         // Make ISS face the direction of travel
         const nextPosition = latLonToVector3(
           issPosition.lat + 0.1,
@@ -585,7 +1038,6 @@
           1.5
         );
         iss.lookAt(nextPosition);
-
         // Update UI with real values
         document.getElementById("latitude").textContent =
           issPosition.lat.toFixed(4) + "°";
@@ -595,12 +1047,10 @@
           issPosition.vel.toFixed(0) + " km/h";
         document.getElementById("altitude").textContent =
           issPosition.alt.toFixed(1) + " km";
-
         const now = new Date();
         document.getElementById("timestamp").textContent =
           now.toLocaleTimeString();
         document.getElementById("date").textContent = now.toLocaleDateString();
-
         // Always add to path
         issPath.push(position.clone());
         updatePath();
@@ -609,12 +1059,10 @@
       // Update ISS path visualization
       function updatePath() {
         if (issPath.length < 2) return;
-
         // Remove old path
         if (scene.getObjectByName("issPath")) {
           scene.remove(scene.getObjectByName("issPath"));
         }
-
         // Create new path
         const geometry = new THREE.BufferGeometry().setFromPoints(issPath);
         const material = new THREE.LineBasicMaterial({
@@ -622,11 +1070,9 @@
           transparent: true,
           opacity: 0.7,
         });
-
         const pathLine = new THREE.Line(geometry, material);
         pathLine.name = "issPath";
         scene.add(pathLine);
-
         // Limit path length
         if (issPath.length > 100) {
           issPath.shift();
@@ -655,14 +1101,896 @@
           });
       }
 
+      // Initialize user data from localStorage
+      function initializeUser() {
+        const savedUser = localStorage.getItem("issTrackerUser");
+        if (savedUser) {
+          currentUser = JSON.parse(savedUser);
+          document.getElementById("user-name").value = currentUser.name || "";
+          document.getElementById("user-country").value =
+            currentUser.country || "";
+          updateUserStats();
+        }
+
+        // Load leaderboard data
+        loadLeaderboard();
+      }
+
+      // Save user profile
+      function saveUserProfile() {
+        const name = document.getElementById("user-name").value.trim();
+        const country = document.getElementById("user-country").value;
+
+        if (!name) {
+          showNotification("Please enter your name", "error");
+          return;
+        }
+
+        if (!country) {
+          showNotification("Please select your country", "error");
+          return;
+        }
+
+        currentUser = {
+          id: currentUser ? currentUser.id : generateUserId(),
+          name: name,
+          country: country,
+          spots: currentUser ? currentUser.spots : 0,
+          lastSpot: currentUser ? currentUser.lastSpot : null,
+        };
+
+        localStorage.setItem("issTrackerUser", JSON.stringify(currentUser));
+        updateUserStats();
+        showNotification("Profile saved successfully!", "success");
+      }
+
+      // Generate a unique user ID
+      function generateUserId() {
+        return (
+          "user_" + Date.now() + "_" + Math.random().toString(36).substr(2, 9)
+        );
+      }
+
+      // Update user stats display
+      function updateUserStats() {
+        if (currentUser) {
+          document.getElementById("user-spots").textContent =
+            currentUser.spots || 0;
+        }
+
+        // Update global stats
+        const totalSpots = leaderboardData.reduce(
+          (sum, user) => sum + user.spots,
+          0
+        );
+        const activeSpotters = leaderboardData.length;
+
+        document.getElementById("global-spots").textContent = totalSpots;
+        document.getElementById("active-spotters").textContent = activeSpotters;
+      }
+
+      // Spot the ISS
+      function spotISS() {
+        if (!currentUser) {
+          showNotification("Please save your profile first", "error");
+          return;
+        }
+
+        const now = Date.now();
+
+        // Check cooldown
+        if (lastSpotTime && now - lastSpotTime < SPOT_COOLDOWN) {
+          const remainingTime = Math.ceil(
+            (SPOT_COOLDOWN - (now - lastSpotTime)) / 1000
+          );
+          showNotification(
+            `Please wait ${remainingTime} seconds before spotting again`,
+            "error"
+          );
+          return;
+        }
+
+        // Update user spots
+        currentUser.spots += 1;
+        currentUser.lastSpot = now;
+        localStorage.setItem("issTrackerUser", JSON.stringify(currentUser));
+
+        // Update leaderboard
+        updateLeaderboard(currentUser);
+
+        // Update last spot time
+        lastSpotTime = now;
+
+        // Update UI
+        updateUserStats();
+
+        // Show notification
+        showNotification("ISS spotted successfully!", "success");
+      }
+
+      // Update leaderboard with user data
+      function updateLeaderboard(user) {
+        // Find user in leaderboard
+        const userIndex = leaderboardData.findIndex((u) => u.id === user.id);
+
+        if (userIndex !== -1) {
+          // Update existing user
+          leaderboardData[userIndex] = { ...user };
+        } else {
+          // Add new user
+          leaderboardData.push({ ...user });
+        }
+
+        // Sort leaderboard by spots (descending)
+        leaderboardData.sort((a, b) => b.spots - a.spots);
+
+        // Save to localStorage
+        localStorage.setItem("issLeaderboard", JSON.stringify(leaderboardData));
+
+        // Update leaderboard display
+        displayLeaderboard();
+      }
+
+      // Load leaderboard from localStorage
+      function loadLeaderboard() {
+        const savedLeaderboard = localStorage.getItem("issLeaderboard");
+        if (savedLeaderboard) {
+          leaderboardData = JSON.parse(savedLeaderboard);
+        } else {
+          // Initialize with some sample data if no saved data
+          leaderboardData = [
+            {
+              id: "sample_1",
+              name: "Alex Johnson",
+              country: "US",
+              spots: 42,
+              lastSpot: Date.now() - 86400000,
+            },
+            {
+              id: "sample_2",
+              name: "Maria Garcia",
+              country: "ES",
+              spots: 38,
+              lastSpot: Date.now() - 172800000,
+            },
+            {
+              id: "sample_3",
+              name: "Chen Wei",
+              country: "CN",
+              spots: 35,
+              lastSpot: Date.now() - 259200000,
+            },
+            {
+              id: "sample_4",
+              name: "James Wilson",
+              country: "GB",
+              spots: 29,
+              lastSpot: Date.now() - 345600000,
+            },
+            {
+              id: "sample_5",
+              name: "Sophie Martin",
+              country: "FR",
+              spots: 24,
+              lastSpot: Date.now() - 432000000,
+            },
+          ];
+          localStorage.setItem(
+            "issLeaderboard",
+            JSON.stringify(leaderboardData)
+          );
+        }
+
+        displayLeaderboard();
+        updateUserStats();
+      }
+
+      // Display leaderboard
+      function displayLeaderboard() {
+        const leaderboardList = document.getElementById("leaderboard-list");
+        leaderboardList.innerHTML = "";
+
+        if (leaderboardData.length === 0) {
+          leaderboardList.innerHTML =
+            "<div class='no-astronauts'>No spotters yet. Be the first!</div>";
+          return;
+        }
+
+        // Get top 10 users
+        const topUsers = leaderboardData.slice(0, 10);
+
+        topUsers.forEach((user, index) => {
+          const leaderboardItem = document.createElement("div");
+          leaderboardItem.className = "leaderboard-item";
+
+          // Determine rank class
+          let rankClass = "rank-other";
+          if (index === 0) rankClass = "rank-1";
+          else if (index === 1) rankClass = "rank-2";
+          else if (index === 2) rankClass = "rank-3";
+
+          // Get country name
+          const countryName = getCountryName(user.country);
+
+          // Check if this is the current user
+          const isCurrentUser = currentUser && currentUser.id === user.id;
+
+          leaderboardItem.innerHTML = `
+            <div class="leaderboard-rank ${rankClass}">${index + 1}</div>
+            <div class="leaderboard-info">
+              <div class="leaderboard-name">${user.name} ${
+            isCurrentUser ? "(You)" : ""
+          }</div>
+              <div class="leaderboard-details">
+                <div class="leaderboard-country">
+                  <img src="https://flagcdn.com/w20/${user.country.toLowerCase()}.png" 
+                       class="flag-icon" 
+                       alt="${countryName} flag" 
+                       onerror="this.src='data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxNiIgaGVpZ2h0PSIxMiIgdmlld0JveD0iMCAwIDE2IDEyIj48cmVjdCB3aWR0aD0iMTYiIGhlaWdodD0iMTIiIGZpbGw9IiM0NDgiLz48L3N2Zz4='" />
+                  ${countryName}
+                </div>
+                <div class="leaderboard-spots">${user.spots} spot${
+            user.spots !== 1 ? "s" : ""
+          }</div>
+              </div>
+            </div>
+          `;
+
+          leaderboardList.appendChild(leaderboardItem);
+        });
+      }
+
+      // Get country name from country code
+      function getCountryName(countryCode) {
+        const countries = {
+          US: "United States",
+          RU: "Russia",
+          CN: "China",
+          JP: "Japan",
+          DE: "Germany",
+          FR: "France",
+          GB: "United Kingdom",
+          IN: "India",
+          BR: "Brazil",
+          CA: "Canada",
+          AU: "Australia",
+          IT: "Italy",
+          ES: "Spain",
+          MX: "Mexico",
+          KR: "South Korea",
+          NL: "Netherlands",
+          SA: "Saudi Arabia",
+          TR: "Turkey",
+          OTHER: "Other",
+        };
+
+        return countries[countryCode] || "Unknown";
+      }
+
+      // Show notification
+      function showNotification(message, type = "success") {
+        const notification = document.getElementById("notification");
+        const title = notification.querySelector(".notification-title");
+        const messageEl = notification.querySelector(".notification-message");
+
+        if (type === "error") {
+          title.textContent = "Error";
+          notification.style.backgroundColor = "rgba(239, 68, 68, 0.9)";
+        } else {
+          title.textContent = "ISS Spotted!";
+          notification.style.backgroundColor = "rgba(16, 185, 129, 0.9)";
+        }
+
+        messageEl.textContent = message;
+        notification.classList.add("show");
+
+        setTimeout(() => {
+          notification.classList.remove("show");
+        }, 3000);
+      }
+
+      // Fetch astronaut data from Open-Notify API with CORS workaround
+      function fetchAstronautData() {
+        const astronautList = document.getElementById("astronaut-list");
+        const astronautCount = document.getElementById("astronaut-count");
+        const apiSource = document.getElementById("api-source");
+
+        astronautList.innerHTML = `
+          <div class="loading" style="position: relative; margin-top: 20px;">
+            <div class="loading-spinner" style="width: 30px; height: 30px;"></div>
+            <p>Loading astronaut data...</p>
+          </div>
+        `;
+        astronautCount.textContent = "Loading...";
+        apiSource.textContent = "Data source: Open-Notify API";
+
+        // Try multiple approaches to fetch the data
+        tryOpenNotifyAPI()
+          .then((data) => {
+            // Store the raw data
+            astronautsData = data;
+
+            // Update the astronaut count
+            const totalPeople = data.number;
+            const issAstronauts = data.people.filter(
+              (person) => person.craft === "ISS"
+            );
+            astronautCount.innerHTML = `There are <strong>${issAstronauts.length}</strong> astronauts on the ISS out of <strong>${totalPeople}</strong> people in space`;
+
+            // Display the astronauts
+            displayAstronauts(issAstronauts);
+          })
+          .catch((error) => {
+            console.error("Error fetching astronaut data:", error);
+            // Fallback to sample data if API fails
+            useSampleAstronautData();
+          });
+      }
+
+      // Try to fetch data from Open-Notify API with multiple approaches
+      function tryOpenNotifyAPI() {
+        return new Promise((resolve, reject) => {
+          // First try: direct fetch
+          fetch("https://api.open-notify.org/astros.json")
+            .then((response) => {
+              if (!response.ok) {
+                throw new Error(`HTTP error! Status: ${response.status}`);
+              }
+              return response.json();
+            })
+            .then((data) => {
+              resolve(data);
+            })
+            .catch((error) => {
+              console.error("Direct fetch failed:", error);
+
+              // Second try: using JSONP workaround
+              tryJSONP()
+                .then((data) => {
+                  resolve(data);
+                })
+                .catch((error) => {
+                  console.error("JSONP approach failed:", error);
+                  reject(error);
+                });
+            });
+        });
+      }
+
+      // JSONP workaround for CORS issues
+      function tryJSONP() {
+        return new Promise((resolve, reject) => {
+          const script = document.createElement("script");
+          const callbackName =
+            "jsonpCallback_" + Math.round(100000 * Math.random());
+
+          // Set up global callback function
+          window[callbackName] = function (data) {
+            // Clean up
+            document.body.removeChild(script);
+            delete window[callbackName];
+
+            resolve(data);
+          };
+
+          // Set up error handler
+          script.onerror = function () {
+            // Clean up
+            document.body.removeChild(script);
+            delete window[callbackName];
+
+            reject(new Error("JSONP request failed"));
+          };
+
+          // Set up timeout
+          const timeout = setTimeout(() => {
+            // Clean up
+            document.body.removeChild(script);
+            delete window[callbackName];
+
+            reject(new Error("JSONP request timed out"));
+          }, 5000);
+
+          // Build the URL
+          const url = `https://api.open-notify.org/astros.json?callback=${callbackName}`;
+
+          // Set script attributes
+          script.src = url;
+          script.async = true;
+
+          // Add script to document
+          document.body.appendChild(script);
+        });
+      }
+
+      // Use sample astronaut data as fallback
+      function useSampleAstronautData() {
+        const astronautList = document.getElementById("astronaut-list");
+        const astronautCount = document.getElementById("astronaut-count");
+        const apiSource = document.getElementById("api-source");
+
+        // Sample data that matches the Open-Notify API format
+        const sampleData = {
+          message: "success",
+          number: 7,
+          people: [
+            { craft: "ISS", name: "Oleg Kononenko" },
+            { craft: "ISS", name: "Nikolai Chub" },
+            { craft: "ISS", name: "Andrei Fedyaev" },
+            { craft: "ISS", name: "Stephen Bowen" },
+            { craft: "ISS", name: "Warren Hoburg" },
+            { craft: "ISS", name: "Sultan Alneyadi" },
+            { craft: "ISS", name: "Jasmin Moghbeli" },
+          ],
+        };
+
+        // Update the astronaut count
+        const totalPeople = sampleData.number;
+        const issAstronauts = sampleData.people.filter(
+          (person) => person.craft === "ISS"
+        );
+        astronautCount.innerHTML = `There are <strong>${issAstronauts.length}</strong> astronauts on the ISS out of <strong>${totalPeople}</strong> people in space`;
+
+        // Update API source to indicate we're using sample data
+        apiSource.textContent = "Data source: Sample data (API unavailable)";
+
+        // Display the astronauts
+        displayAstronauts(issAstronauts);
+      }
+
+      // Display astronaut data in the sidebar
+      function displayAstronauts(astronauts) {
+        const astronautList = document.getElementById("astronaut-list");
+        astronautList.innerHTML = "";
+
+        if (astronauts.length === 0) {
+          astronautList.innerHTML =
+            "<div class='no-astronauts'>No astronauts currently on ISS</div>";
+          return;
+        }
+
+        astronauts.forEach((astronaut) => {
+          // Get additional details for the astronaut
+          const details = getAstronautDetails(astronaut.name);
+
+          const astronautItem = document.createElement("div");
+          astronautItem.className = "astronaut-item";
+
+          // Handle missing flag images gracefully
+          const flagOnError =
+            "this.src='data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxNiIgaGVpZ2h0PSIxMiIgdmlld0JveD0iMCAwIDE2IDEyIj48cmVjdCB3aWR0aD0iMTYiIGhlaWdodD0iMTIiIGZpbGw9IiM0NDgiLz48L3N2Zz4='";
+
+          astronautItem.innerHTML = `
+            <div class="astronaut-name">
+              <img src="https://flagcdn.com/w40/${details.countryCode.toLowerCase()}.png" 
+                   class="flag-icon" 
+                   alt="${details.nationality} flag" 
+                   onerror="${flagOnError}" />
+              ${astronaut.name}
+            </div>
+            <div class="astronaut-details">
+              <div class="astronaut-detail">
+                <span class="astronaut-detail-label">Nationality:</span>
+                <span class="astronaut-detail-value">${
+                  details.nationality
+                }</span>
+              </div>
+              <div class="astronaut-detail">
+                <span class="astronaut-detail-label">Craft:</span>
+                <span class="astronaut-detail-value">${astronaut.craft}</span>
+              </div>
+              <div class="astronaut-detail">
+                <span class="astronaut-detail-label">Role:</span>
+                <span class="astronaut-detail-value">${details.role}</span>
+              </div>
+              ${
+                details.mission
+                  ? `
+                <div class="astronaut-detail">
+                  <span class="astronaut-detail-label">Mission:</span>
+                  <span class="astronaut-detail-value">${details.mission}</span>
+                </div>
+              `
+                  : ""
+              }
+              ${
+                details.bio
+                  ? `
+                <div class="astronaut-detail" style="margin-top: 8px;">
+                  <span class="astronaut-detail-value" style="font-style: italic; font-size: 12px; color: #94a3b8;">
+                    ${details.bio}
+                  </span>
+                </div>
+              `
+                  : ""
+              }
+            </div>
+          `;
+
+          astronautList.appendChild(astronautItem);
+        });
+      }
+
+      // Get additional astronaut details
+      function getAstronautDetails(name) {
+        // Astronaut database with information about current and recent ISS crew members
+        // This data is based on publicly available information about ISS expeditions
+        const astronautDatabase = {
+          "Oleg Kononenko": {
+            nationality: "Russian",
+            countryCode: "ru",
+            role: "Commander",
+            mission: "Expedition 70",
+            bio: "Veteran cosmonaut on his fifth spaceflight",
+          },
+          "Nikolai Chub": {
+            nationality: "Russian",
+            countryCode: "ru",
+            role: "Flight Engineer",
+            mission: "Expedition 70",
+            bio: "Roscosmos cosmonaut on his first spaceflight",
+          },
+          "Andrei Fedyaev": {
+            nationality: "Russian",
+            countryCode: "ru",
+            role: "Flight Engineer",
+            mission: "Expedition 69",
+            bio: "Roscosmos cosmonaut on his first spaceflight",
+          },
+          "Stephen Bowen": {
+            nationality: "American",
+            countryCode: "us",
+            role: "Flight Engineer",
+            mission: "SpaceX Crew-6",
+            bio: "NASA astronaut and veteran of multiple spaceflights",
+          },
+          "Warren Hoburg": {
+            nationality: "American",
+            countryCode: "us",
+            role: "Flight Engineer",
+            mission: "SpaceX Crew-6",
+            bio: "NASA astronaut on his first spaceflight",
+          },
+          "Sultan Alneyadi": {
+            nationality: "Emirati",
+            countryCode: "ae",
+            role: "Flight Engineer",
+            mission: "SpaceX Crew-6",
+            bio: "First UAE astronaut to conduct a spacewalk",
+          },
+          "Jasmin Moghbeli": {
+            nationality: "American",
+            countryCode: "us",
+            role: "Flight Engineer",
+            mission: "SpaceX Crew-7",
+            bio: "NASA astronaut and commander of Crew-7",
+          },
+          "Andreas Mogensen": {
+            nationality: "Danish",
+            countryCode: "dk",
+            role: "Commander",
+            mission: "Expedition 70",
+            bio: "First Danish astronaut to command the ISS",
+          },
+          "Satoshi Furukawa": {
+            nationality: "Japanese",
+            countryCode: "jp",
+            role: "Flight Engineer",
+            mission: "SpaceX Crew-7",
+            bio: "JAXA astronaut and medical doctor",
+          },
+          "Konstantin Borisov": {
+            nationality: "Russian",
+            countryCode: "ru",
+            role: "Flight Engineer",
+            mission: "SpaceX Crew-7",
+            bio: "Roscosmos cosmonaut on his first spaceflight",
+          },
+          "Loral O'Hara": {
+            nationality: "American",
+            countryCode: "us",
+            role: "Flight Engineer",
+            mission: "Expedition 70",
+            bio: "NASA engineer on her first spaceflight",
+          },
+        };
+
+        // Try to match the name with our database
+        // Handle potential variations in name formatting
+        let matchedName = null;
+
+        // Direct match
+        if (astronautDatabase[name]) {
+          matchedName = name;
+        } else {
+          // Try to match by last name
+          const lastName = name.split(" ").pop();
+          for (const fullName in astronautDatabase) {
+            if (fullName.includes(lastName)) {
+              matchedName = fullName;
+              break;
+            }
+          }
+        }
+
+        // Return details if found, otherwise return default values
+        if (matchedName) {
+          return astronautDatabase[matchedName];
+        } else {
+          // Try to determine nationality from name patterns
+          let nationality = "Unknown";
+          let countryCode = "un";
+          let role = "Crew Member";
+
+          // Simple pattern matching for common nationalities
+          if (/[aouei]/i.test(name) && name.length > 5) {
+            // This is a very rough heuristic and not accurate
+            // In a real application, you would use a proper name-to-nationality database
+            const russianNames = [
+              "Oleg",
+              "Nikolai",
+              "Andrei",
+              "Gennady",
+              "Yuri",
+              "Anton",
+              "Alexander",
+              "Mikhail",
+              "Sergey",
+              "Dmitri",
+            ];
+            const americanNames = [
+              "Scott",
+              "Mark",
+              "Joe",
+              "Ricky",
+              "Drew",
+              "Terry",
+              "Chris",
+              "Jessica",
+              "Kate",
+              "Shane",
+            ];
+
+            const firstName = name.split(" ")[0];
+
+            if (russianNames.includes(firstName)) {
+              nationality = "Russian";
+              countryCode = "ru";
+              role = "Cosmonaut";
+            } else if (americanNames.includes(firstName)) {
+              nationality = "American";
+              countryCode = "us";
+              role = "Astronaut";
+            }
+          }
+
+          return {
+            nationality: nationality,
+            countryCode: countryCode,
+            role: role,
+            mission: "ISS Expedition",
+            bio: "No additional information available",
+          };
+        }
+      }
+
+      // Fetch earthquake data from USGS API
+      function fetchEarthquakeData(timeframe) {
+        const earthquakeList = document.getElementById("earthquake-list");
+        earthquakeList.innerHTML = `
+          <div class="loading" style="position: relative; margin-top: 20px;">
+            <div class="loading-spinner" style="width: 30px; height: 30px;"></div>
+            <p>Loading earthquake data...</p>
+          </div>
+        `;
+
+        // Clear existing earthquake markers
+        clearEarthquakeMarkers();
+
+        let url;
+        switch (timeframe) {
+          case "day":
+            url =
+              "https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_day.geojson";
+            break;
+          case "week":
+            url =
+              "https://earthquake.usgs.org/earthquakes/feed/v1.0/summary/all_week.geojson";
+            break;
+          case "month":
+            url =
+              "https://earthquake.usgs.org/earthquakes/feed/v1.0/summary/all_month.geojson";
+            break;
+          default:
+            url =
+              "https://earthquake.usgs.org/earthquakes/feed/v1.0/summary/all_day.geojson";
+        }
+
+        fetch(url)
+          .then((response) => response.json())
+          .then((data) => {
+            earthquakeData = data.features;
+            displayEarthquakes(data.features);
+            addEarthquakeMarkers(data.features);
+          })
+          .catch((error) => {
+            console.error("Error fetching earthquake data:", error);
+            earthquakeList.innerHTML =
+              "<li>Error loading earthquake data.</li>";
+          });
+      }
+
+      // Display earthquake data in the sidebar
+      function displayEarthquakes(earthquakes) {
+        const earthquakeList = document.getElementById("earthquake-list");
+        earthquakeList.innerHTML = "";
+
+        // Sort earthquakes by magnitude (descending)
+        earthquakes.sort((a, b) => b.properties.mag - a.properties.mag);
+
+        // Display only top 10 earthquakes
+        const topEarthquakes = earthquakes.slice(0, 10);
+
+        topEarthquakes.forEach((quake) => {
+          const magnitude = quake.properties.mag;
+          const place = quake.properties.place;
+          const time = new Date(quake.properties.time);
+          const timeStr = time.toLocaleString();
+
+          const earthquakeItem = document.createElement("div");
+          earthquakeItem.className = "earthquake-item";
+          earthquakeItem.innerHTML = `
+            <span class="earthquake-magnitude">Magnitude ${magnitude.toFixed(
+              1
+            )}</span>
+            <span class="earthquake-place">${place}</span>
+            <span class="earthquake-time">${timeStr}</span>
+          `;
+
+          // Add click event to focus on earthquake
+          earthquakeItem.addEventListener("click", () => {
+            focusOnEarthquake(quake);
+          });
+
+          earthquakeList.appendChild(earthquakeItem);
+        });
+
+        if (earthquakes.length === 0) {
+          earthquakeList.innerHTML =
+            "<p>No earthquakes recorded in this timeframe.</p>";
+        }
+      }
+
+      // Add earthquake markers to the 3D globe
+      function addEarthquakeMarkers(earthquakes) {
+        earthquakes.forEach((quake) => {
+          const coordinates = quake.geometry.coordinates;
+          const magnitude = quake.properties.mag;
+
+          // Convert lat/lon to 3D position (slightly above Earth surface)
+          const position = latLonToVector3(
+            coordinates[1],
+            coordinates[0],
+            1.02
+          );
+
+          // Create marker with size based on magnitude
+          const markerSize = 0.01 + (magnitude / 10) * 0.03;
+          const geometry = new THREE.SphereGeometry(markerSize, 16, 16);
+
+          // Color based on magnitude
+          let color;
+          if (magnitude < 4.0) {
+            color = 0x10b981; // Green for minor
+          } else if (magnitude < 6.0) {
+            color = 0xf59e0b; // Amber for moderate
+          } else if (magnitude < 7.5) {
+            color = 0xef4444; // Red for strong
+          } else {
+            color = 0x8b5cf6; // Purple for major
+          }
+
+          const material = new THREE.MeshBasicMaterial({
+            color: color,
+            transparent: true,
+            opacity: 0.8,
+          });
+
+          const marker = new THREE.Mesh(geometry, material);
+          marker.position.copy(position);
+          marker.userData = { type: "earthquake", data: quake };
+
+          // Add pulsing animation
+          marker.userData.originalScale = marker.scale.clone();
+
+          // Add marker to Earth group so it rotates with Earth
+          earthGroup.add(marker);
+          earthquakeMarkers.push(marker);
+        });
+      }
+
+      // Clear all earthquake markers
+      function clearEarthquakeMarkers() {
+        earthquakeMarkers.forEach((marker) => {
+          earthGroup.remove(marker);
+        });
+        earthquakeMarkers = [];
+      }
+
+      // Focus camera on a specific earthquake
+      function focusOnEarthquake(quake) {
+        const coordinates = quake.geometry.coordinates;
+        const position = latLonToVector3(coordinates[1], coordinates[0], 2.5);
+
+        // Animate camera to focus on earthquake
+        const startPosition = camera.position.clone();
+        const startTime = Date.now();
+        const duration = 1000; // 1 second
+
+        function animateCamera() {
+          const elapsed = Date.now() - startTime;
+          const progress = Math.min(elapsed / duration, 1);
+
+          // Easing function for smooth animation
+          const easeProgress = 1 - Math.pow(1 - progress, 3);
+
+          camera.position.lerpVectors(startPosition, position, easeProgress);
+          camera.lookAt(0, 0, 0);
+
+          if (progress < 1) {
+            requestAnimationFrame(animateCamera);
+          }
+        }
+
+        animateCamera();
+      }
+
+      // Setup earthquake timeframe controls
+      function setupEarthquakeControls() {
+        const dayBtn = document.getElementById("eq-day");
+        const weekBtn = document.getElementById("eq-week");
+        const monthBtn = document.getElementById("eq-month");
+
+        dayBtn.addEventListener("click", () => {
+          setActiveEarthquakeButton(dayBtn);
+          fetchEarthquakeData("day");
+        });
+
+        weekBtn.addEventListener("click", () => {
+          setActiveEarthquakeButton(weekBtn);
+          fetchEarthquakeData("week");
+        });
+
+        monthBtn.addEventListener("click", () => {
+          setActiveEarthquakeButton(monthBtn);
+          fetchEarthquakeData("month");
+        });
+      }
+
+      // Set active earthquake button
+      function setActiveEarthquakeButton(activeBtn) {
+        const buttons = document.querySelectorAll(
+          ".earthquake-controls button"
+        );
+        buttons.forEach((btn) => btn.classList.remove("active"));
+        activeBtn.classList.add("active");
+      }
+
       // Animation loop
       function animate() {
         animationId = requestAnimationFrame(animate);
 
-        // Rotate Earth
-        if (globe) {
-          globe.rotation.y += 0.0005;
+        // Rotate Earth group (which includes Earth, clouds, and earthquake markers)
+        if (earthGroup) {
+          earthGroup.rotation.y += 0.0005;
         }
+
+        // Animate earthquake markers
+        earthquakeMarkers.forEach((marker) => {
+          const time = Date.now() * 0.001;
+          const scale = 1 + Math.sin(time * 2) * 0.2;
+          marker.scale.setScalar(scale);
+        });
 
         // Update controls
         controls.update();
@@ -676,7 +2004,6 @@
         const container = document.getElementById("globe");
         const width = container.clientWidth;
         const height = container.clientHeight;
-
         camera.aspect = width / height;
         camera.updateProjectionMatrix();
         renderer.setSize(width, height);
@@ -691,44 +2018,33 @@
             alert("Please select a date and time");
             return;
           }
-
           const selectedDate = new Date(dateInput);
           const now = new Date();
-
           if (selectedDate <= now) {
             alert("Please select a future date and time");
             return;
           }
-
           // Calculate time difference in seconds
           const timeDiff = (selectedDate - now) / 1000;
-
           // Calculate orbital period (approximate)
           const orbitalPeriod = 5580; // seconds (92.9 minutes)
-
           // Calculate orbits completed
           const orbitsCompleted = timeDiff / orbitalPeriod;
-
           // Calculate new position (simplified calculation)
           const angularVelocity = 360 / orbitalPeriod; // degrees per second
           const angleTraveled = angularVelocity * timeDiff;
-
           // Convert to radians
           const angleRad = angleTraveled * (Math.PI / 180);
-
           // Calculate new position (simplified)
           const newLat = issPosition.lat + Math.sin(angleRad) * 10;
           const newLon = issPosition.lon + angleTraveled;
-
           // Normalize longitude
           let normalizedLon = newLon % 360;
           if (normalizedLon > 180) normalizedLon -= 360;
           if (normalizedLon < -180) normalizedLon += 360;
-
           // Calculate predicted altitude and velocity (simplified)
           const predAlt = issPosition.alt + Math.sin(angleRad) * 5;
           const predVel = issPosition.vel + Math.sin(angleRad) * 50;
-
           // Display prediction
           document.getElementById("pred-lat").textContent =
             newLat.toFixed(4) + "°";
@@ -738,17 +2054,14 @@
             predAlt.toFixed(1) + " km";
           document.getElementById("pred-vel").textContent =
             predVel.toFixed(0) + " km/h";
-
           // Format time difference
           const days = Math.floor(timeDiff / (3600 * 24));
           const hours = Math.floor((timeDiff % (3600 * 24)) / 3600);
           const minutes = Math.floor((timeDiff % 3600) / 60);
-
           let timeStr = "";
           if (days > 0) timeStr += `${days}d `;
           if (hours > 0) timeStr += `${hours}h `;
           if (minutes > 0) timeStr += `${minutes}m `;
-
           document.getElementById("pred-time").textContent = timeStr;
           document.getElementById("prediction-result").classList.add("active");
         });
