@@ -1,0 +1,1079 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ISS Tracker - Real-time International Space Station Tracking</title>
+
+    <!-- Three.js for 3D rendering -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+
+    <!-- Font Awesome for icons -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+
+    <!-- Google Fonts -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Roboto:wght@300;400;500&display=swap"
+      rel="stylesheet"
+    />
+
+    <style>
+      :root {
+        --primary-color: #1a73e8;
+        --secondary-color: #0d47a1;
+        --accent-color: #ff5722;
+        --dark-bg: #121212;
+        --light-bg: #1e1e1e;
+        --text-color: #ffffff;
+        --secondary-text: #b0bec5;
+        --card-bg: rgba(30, 30, 30, 0.7);
+        --hover-color: #2a56c6;
+      }
+
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: "Roboto", sans-serif;
+        background-color: var(--dark-bg);
+        color: var(--text-color);
+        overflow-x: hidden;
+      }
+
+      /* Header Styles */
+      header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 1rem 5%;
+        background-color: rgba(18, 18, 18, 0.8);
+        backdrop-filter: blur(10px);
+        position: fixed;
+        width: 100%;
+        top: 0;
+        z-index: 1000;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+      }
+
+      .logo {
+        display: flex;
+        align-items: center;
+        font-family: "Montserrat", sans-serif;
+        font-weight: 700;
+        font-size: 1.5rem;
+        color: var(--primary-color);
+      }
+
+      .logo i {
+        margin-right: 0.5rem;
+        font-size: 1.8rem;
+      }
+
+      .join-btn {
+        background-color: var(--primary-color);
+        color: white;
+        border: none;
+        padding: 0.6rem 1.5rem;
+        border-radius: 30px;
+        font-weight: 500;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        font-family: "Montserrat", sans-serif;
+      }
+
+      .join-btn:hover {
+        background-color: var(--hover-color);
+        transform: translateY(-2px);
+        box-shadow: 0 5px 15px rgba(26, 115, 232, 0.4);
+      }
+
+      /* Main Content */
+      main {
+        margin-top: 70px;
+        min-height: calc(100vh - 70px);
+        position: relative;
+      }
+
+      #globe-container {
+        width: 100%;
+        height: 70vh;
+        position: relative;
+        overflow: hidden;
+      }
+
+      #globe {
+        width: 100%;
+        height: 100%;
+      }
+
+      /* Data Display Section */
+      .data-container {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 1.5rem;
+        padding: 2rem 5%;
+        max-width: 1200px;
+        margin: 0 auto;
+      }
+
+      .data-card {
+        background-color: var(--card-bg);
+        border-radius: 10px;
+        padding: 1.5rem;
+        backdrop-filter: blur(5px);
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        animation: fadeIn 0.8s ease-out;
+      }
+
+      .data-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+      }
+
+      .data-card h3 {
+        font-family: "Montserrat", sans-serif;
+        font-weight: 500;
+        margin-bottom: 0.5rem;
+        color: var(--secondary-text);
+        font-size: 0.9rem;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+      }
+
+      .data-value {
+        font-size: 1.8rem;
+        font-weight: 700;
+        color: var(--primary-color);
+        margin-bottom: 0.3rem;
+      }
+
+      .data-unit {
+        font-size: 0.9rem;
+        color: var(--secondary-text);
+      }
+
+      /* ISS Information Section */
+      .iss-info {
+        padding: 3rem 5%;
+        max-width: 1200px;
+        margin: 0 auto;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 2rem;
+        align-items: center;
+      }
+
+      .iss-text {
+        flex: 1;
+        min-width: 300px;
+      }
+
+      .iss-text h2 {
+        font-family: "Montserrat", sans-serif;
+        margin-bottom: 1rem;
+        color: var(--primary-color);
+      }
+
+      .iss-text p {
+        line-height: 1.6;
+        margin-bottom: 1.5rem;
+        color: var(--secondary-text);
+      }
+
+      .iss-links {
+        display: flex;
+        gap: 1rem;
+        flex-wrap: wrap;
+      }
+
+      .iss-links a {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        color: var(--primary-color);
+        text-decoration: none;
+        padding: 0.5rem 1rem;
+        border: 1px solid var(--primary-color);
+        border-radius: 5px;
+        transition: all 0.3s ease;
+      }
+
+      .iss-links a:hover {
+        background-color: var(--primary-color);
+        color: white;
+      }
+
+      .iss-image {
+        flex: 1;
+        min-width: 300px;
+        text-align: center;
+      }
+
+      .iss-image img {
+        max-width: 100%;
+        border-radius: 10px;
+        box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
+      }
+
+      /* Footer */
+      footer {
+        background-color: var(--light-bg);
+        padding: 3rem 5%;
+        margin-top: 3rem;
+      }
+
+      .footer-content {
+        max-width: 1200px;
+        margin: 0 auto;
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 2rem;
+      }
+
+      .footer-section h3 {
+        font-family: "Montserrat", sans-serif;
+        margin-bottom: 1rem;
+        color: var(--primary-color);
+      }
+
+      .footer-section p {
+        color: var(--secondary-text);
+        margin-bottom: 1rem;
+        line-height: 1.6;
+      }
+
+      .subscription-form {
+        display: flex;
+        margin-top: 1rem;
+      }
+
+      .subscription-form input {
+        flex: 1;
+        padding: 0.7rem;
+        border: none;
+        border-radius: 5px 0 0 5px;
+        background-color: var(--dark-bg);
+        color: white;
+      }
+
+      .subscription-form button {
+        background-color: var(--primary-color);
+        color: white;
+        border: none;
+        padding: 0 1.5rem;
+        border-radius: 0 5px 5px 0;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+      }
+
+      .subscription-form button:hover {
+        background-color: var(--hover-color);
+      }
+
+      .social-links {
+        display: flex;
+        gap: 1rem;
+        margin-top: 1rem;
+      }
+
+      .social-links a {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        background-color: var(--dark-bg);
+        color: var(--primary-color);
+        transition: all 0.3s ease;
+      }
+
+      .social-links a:hover {
+        background-color: var(--primary-color);
+        color: white;
+        transform: translateY(-3px);
+      }
+
+      .footer-links {
+        list-style: none;
+      }
+
+      .footer-links li {
+        margin-bottom: 0.8rem;
+      }
+
+      .footer-links a {
+        color: var(--secondary-text);
+        text-decoration: none;
+        transition: color 0.3s ease;
+      }
+
+      .footer-links a:hover {
+        color: var(--primary-color);
+      }
+
+      .copyright {
+        text-align: center;
+        margin-top: 2rem;
+        padding-top: 2rem;
+        border-top: 1px solid rgba(255, 255, 255, 0.1);
+        color: var(--secondary-text);
+        font-size: 0.9rem;
+      }
+
+      /* Modal for Contact Form */
+      .modal {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.7);
+        z-index: 2000;
+        justify-content: center;
+        align-items: center;
+      }
+
+      .modal-content {
+        background-color: var(--light-bg);
+        border-radius: 10px;
+        padding: 2rem;
+        width: 90%;
+        max-width: 500px;
+        position: relative;
+        animation: slideIn 0.3s ease-out;
+      }
+
+      .close-modal {
+        position: absolute;
+        top: 1rem;
+        right: 1rem;
+        font-size: 1.5rem;
+        cursor: pointer;
+        color: var(--secondary-text);
+        transition: color 0.3s ease;
+      }
+
+      .close-modal:hover {
+        color: var(--text-color);
+      }
+
+      .contact-form h3 {
+        margin-bottom: 1.5rem;
+        color: var(--primary-color);
+        font-family: "Montserrat", sans-serif;
+      }
+
+      .form-group {
+        margin-bottom: 1.5rem;
+      }
+
+      .form-group label {
+        display: block;
+        margin-bottom: 0.5rem;
+        color: var(--secondary-text);
+      }
+
+      .form-group input,
+      .form-group textarea {
+        width: 100%;
+        padding: 0.8rem;
+        background-color: var(--dark-bg);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        border-radius: 5px;
+        color: white;
+        font-family: "Roboto", sans-serif;
+      }
+
+      .form-group textarea {
+        resize: vertical;
+        min-height: 120px;
+      }
+
+      .submit-btn {
+        background-color: var(--primary-color);
+        color: white;
+        border: none;
+        padding: 0.8rem 1.5rem;
+        border-radius: 5px;
+        cursor: pointer;
+        font-weight: 500;
+        transition: background-color 0.3s ease;
+        width: 100%;
+      }
+
+      .submit-btn:hover {
+        background-color: var(--hover-color);
+      }
+
+      /* Loading Spinner */
+      .loading {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 50px;
+        height: 50px;
+        border: 5px solid rgba(255, 255, 255, 0.3);
+        border-radius: 50%;
+        border-top-color: var(--primary-color);
+        animation: spin 1s ease-in-out infinite;
+      }
+
+      /* Animations */
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+          transform: translateY(20px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      @keyframes slideIn {
+        from {
+          transform: translateY(-50px);
+          opacity: 0;
+        }
+        to {
+          transform: translateY(0);
+          opacity: 1;
+        }
+      }
+
+      @keyframes spin {
+        to {
+          transform: translate(-50%, -50%) rotate(360deg);
+        }
+      }
+
+      /* Responsive Design */
+      @media (max-width: 768px) {
+        header {
+          padding: 1rem 3%;
+        }
+
+        .logo {
+          font-size: 1.2rem;
+        }
+
+        .join-btn {
+          padding: 0.5rem 1rem;
+          font-size: 0.9rem;
+        }
+
+        #globe-container {
+          height: 50vh;
+        }
+
+        .data-container {
+          grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+          padding: 1rem 3%;
+          gap: 1rem;
+        }
+
+        .data-card {
+          padding: 1rem;
+        }
+
+        .data-value {
+          font-size: 1.4rem;
+        }
+
+        .iss-info {
+          padding: 2rem 3%;
+        }
+
+        footer {
+          padding: 2rem 3%;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Header -->
+    <header>
+      <div class="logo">
+        <i class="fas fa-satellite-dish"></i>
+        <span>ISS Tracker</span>
+      </div>
+      <button class="join-btn">Join</button>
+    </header>
+
+    <!-- Main Content -->
+    <main>
+      <!-- 3D Globe Container -->
+      <section id="globe-container">
+        <div id="globe"></div>
+        <div class="loading" id="loading"></div>
+      </section>
+
+      <!-- Real-time Data Display -->
+      <section class="data-container">
+        <div class="data-card">
+          <h3>Longitude</h3>
+          <div class="data-value" id="longitude">--</div>
+          <div class="data-unit">degrees</div>
+        </div>
+        <div class="data-card">
+          <h3>Latitude</h3>
+          <div class="data-value" id="latitude">--</div>
+          <div class="data-unit">degrees</div>
+        </div>
+        <div class="data-card">
+          <h3>Altitude</h3>
+          <div class="data-value" id="altitude">--</div>
+          <div class="data-unit">km</div>
+        </div>
+        <div class="data-card">
+          <h3>Velocity</h3>
+          <div class="data-value" id="velocity">--</div>
+          <div class="data-unit">km/h</div>
+        </div>
+        <div class="data-card">
+          <h3>Date & Time</h3>
+          <div class="data-value" id="datetime">--</div>
+          <div class="data-unit">UTC</div>
+        </div>
+        <div class="data-card">
+          <h3>Last Update</h3>
+          <div class="data-value" id="lastupdate">--</div>
+          <div class="data-unit">seconds ago</div>
+        </div>
+      </section>
+
+      <!-- ISS Information Section -->
+      <section class="iss-info">
+        <div class="iss-text">
+          <h2>About the International Space Station</h2>
+          <p>
+            The International Space Station (ISS) is a habitable artificial
+            satellite in low Earth orbit. It serves as a microgravity and space
+            environment research laboratory where scientific research is
+            conducted in astrobiology, astronomy, meteorology, physics, and
+            other fields. The ISS is a joint project between five participating
+            space agencies: NASA (United States), Roscosmos (Russia), JAXA
+            (Japan), ESA (Europe), and CSA (Canada).
+          </p>
+          <p>
+            The station is divided into two sections: the Russian Orbital
+            Segment (ROS) operated by Russia, and the United States Orbital
+            Segment (USOS) shared by many nations. It maintains an orbit with an
+            average altitude of 408 kilometers (254 miles) and completes 15.5
+            orbits per day.
+          </p>
+          <div class="iss-links">
+            <a
+              href="https://www.nasa.gov/mission_pages/station/main/index.html"
+              target="_blank"
+            >
+              <i class="fas fa-external-link-alt"></i> NASA
+            </a>
+            <a
+              href="https://www.esa.int/Science_Exploration/Human_and_Robotic_Exploration/International_Space_Station"
+              target="_blank"
+            >
+              <i class="fas fa-external-link-alt"></i> ESA
+            </a>
+            <a href="https://www.roscosmos.ru/446/" target="_blank">
+              <i class="fas fa-external-link-alt"></i> Roscosmos
+            </a>
+          </div>
+        </div>
+        <div class="iss-image">
+          <img
+            src="https://images.unsplash.com/photo-1446776877081-d282a0f896e2?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80"
+            alt="International Space Station"
+          />
+        </div>
+      </section>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+      <div class="footer-content">
+        <div class="footer-section">
+          <h3>Subscribe for Updates</h3>
+          <p>
+            Get the latest ISS tracking data and space news delivered to your
+            inbox.
+          </p>
+          <form class="subscription-form">
+            <input type="email" placeholder="Your email address" required />
+            <button type="submit">Subscribe</button>
+          </form>
+        </div>
+        <div class="footer-section">
+          <h3>Follow Us</h3>
+          <p>
+            Connect with us on social media for real-time updates and space
+            community discussions.
+          </p>
+          <div class="social-links">
+            <a href="#" target="_blank"><i class="fab fa-twitter"></i></a>
+            <a href="#" target="_blank"><i class="fab fa-facebook"></i></a>
+            <a href="#" target="_blank"><i class="fab fa-instagram"></i></a>
+            <a href="#" target="_blank"><i class="fab fa-youtube"></i></a>
+            <a href="#" target="_blank"><i class="fab fa-reddit"></i></a>
+          </div>
+        </div>
+        <div class="footer-section">
+          <h3>Quick Links</h3>
+          <ul class="footer-links">
+            <li><a href="#" id="contact-link">Contact Us</a></li>
+            <li><a href="#">Privacy Policy</a></li>
+            <li><a href="#">Terms of Service</a></li>
+            <li><a href="#">API Documentation</a></li>
+            <li><a href="#">FAQ</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="copyright">
+        <p>&copy; 2023 ISS Tracker. All rights reserved.</p>
+      </div>
+    </footer>
+
+    <!-- Contact Modal -->
+    <div class="modal" id="contact-modal">
+      <div class="modal-content">
+        <span class="close-modal" id="close-modal">&times;</span>
+        <form class="contact-form">
+          <h3>Contact Us</h3>
+          <div class="form-group">
+            <label for="name">Name</label>
+            <input type="text" id="name" required />
+          </div>
+          <div class="form-group">
+            <label for="email">Email</label>
+            <input type="email" id="email" required />
+          </div>
+          <div class="form-group">
+            <label for="subject">Subject</label>
+            <input type="text" id="subject" required />
+          </div>
+          <div class="form-group">
+            <label for="message">Message</label>
+            <textarea id="message" required></textarea>
+          </div>
+          <button type="submit" class="submit-btn">Send Message</button>
+        </form>
+      </div>
+    </div>
+
+    <script>
+      // Global variables
+      let scene, camera, renderer, earth, iss, issOrbit;
+      let issPosition = { lat: 0, lng: 0, alt: 408 };
+      let lastUpdateTime = Date.now();
+      let earthRotation = 0;
+      let issRotation = 0;
+
+      // Initialize Three.js scene
+      function initGlobe() {
+        const container = document.getElementById("globe");
+
+        // Create scene
+        scene = new THREE.Scene();
+
+        // Create camera
+        camera = new THREE.PerspectiveCamera(
+          45,
+          container.clientWidth / container.clientHeight,
+          0.1,
+          1000
+        );
+        camera.position.z = 2.5;
+
+        // Create renderer
+        renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+        renderer.setSize(container.clientWidth, container.clientHeight);
+        renderer.setPixelRatio(window.devicePixelRatio);
+        container.appendChild(renderer.domElement);
+
+        // Add ambient light
+        const ambientLight = new THREE.AmbientLight(0x333333);
+        scene.add(ambientLight);
+
+        // Add directional light
+        const directionalLight = new THREE.DirectionalLight(0xffffff, 1);
+        directionalLight.position.set(5, 3, 5);
+        scene.add(directionalLight);
+
+        // Create Earth
+        const earthGeometry = new THREE.SphereGeometry(1, 64, 64);
+        const earthTexture = new THREE.TextureLoader().load(
+          "https://raw.githubusercontent.com/mrdoob/three.js/master/examples/textures/planets/earth_atmos_2048.jpg"
+        );
+        const earthBumpMap = new THREE.TextureLoader().load(
+          "https://raw.githubusercontent.com/mrdoob/three.js/master/examples/textures/planets/earth_normal_2048.jpg"
+        );
+        const earthSpecularMap = new THREE.TextureLoader().load(
+          "https://raw.githubusercontent.com/mrdoob/three.js/master/examples/textures/planets/earth_specular_2048.jpg"
+        );
+
+        const earthMaterial = new THREE.MeshPhongMaterial({
+          map: earthTexture,
+          bumpMap: earthBumpMap,
+          bumpScale: 0.05,
+          specularMap: earthSpecularMap,
+          specular: new THREE.Color("grey"),
+        });
+
+        earth = new THREE.Mesh(earthGeometry, earthMaterial);
+        scene.add(earth);
+
+        // Create clouds
+        const cloudGeometry = new THREE.SphereGeometry(1.01, 64, 64);
+        const cloudTexture = new THREE.TextureLoader().load(
+          "https://raw.githubusercontent.com/mrdoob/three.js/master/examples/textures/planets/earth_clouds_1024.png"
+        );
+        const cloudMaterial = new THREE.MeshPhongMaterial({
+          map: cloudTexture,
+          transparent: true,
+          opacity: 0.4,
+        });
+
+        const clouds = new THREE.Mesh(cloudGeometry, cloudMaterial);
+        earth.add(clouds);
+
+        // Create ISS model
+        createISSModel();
+
+        // Create ISS orbit line
+        createOrbitLine();
+
+        // Add controls
+        addControls();
+
+        // Hide loading spinner
+        document.getElementById("loading").style.display = "none";
+
+        // Start animation
+        animate();
+      }
+
+      // Create ISS model
+      function createISSModel() {
+        iss = new THREE.Group();
+
+        // ISS body
+        const bodyGeometry = new THREE.BoxGeometry(0.03, 0.01, 0.01);
+        const bodyMaterial = new THREE.MeshPhongMaterial({ color: 0xcccccc });
+        const body = new THREE.Mesh(bodyGeometry, bodyMaterial);
+        iss.add(body);
+
+        // Solar panels
+        const panelGeometry = new THREE.BoxGeometry(0.08, 0.001, 0.02);
+        const panelMaterial = new THREE.MeshPhongMaterial({ color: 0x0000ff });
+
+        const leftPanel = new THREE.Mesh(panelGeometry, panelMaterial);
+        leftPanel.position.x = -0.04;
+        iss.add(leftPanel);
+
+        const rightPanel = new THREE.Mesh(panelGeometry, panelMaterial);
+        rightPanel.position.x = 0.04;
+        iss.add(rightPanel);
+
+        // Radiators
+        const radiatorGeometry = new THREE.BoxGeometry(0.02, 0.001, 0.015);
+        const radiatorMaterial = new THREE.MeshPhongMaterial({
+          color: 0x888888,
+        });
+
+        const leftRadiator = new THREE.Mesh(radiatorGeometry, radiatorMaterial);
+        leftRadiator.position.set(-0.025, 0, 0.01);
+        iss.add(leftRadiator);
+
+        const rightRadiator = new THREE.Mesh(
+          radiatorGeometry,
+          radiatorMaterial
+        );
+        rightRadiator.position.set(0.025, 0, 0.01);
+        iss.add(rightRadiator);
+
+        // Modules
+        const moduleGeometry = new THREE.CylinderGeometry(
+          0.005,
+          0.005,
+          0.015,
+          8
+        );
+        const moduleMaterial = new THREE.MeshPhongMaterial({ color: 0xffffff });
+
+        const module1 = new THREE.Mesh(moduleGeometry, moduleMaterial);
+        module1.rotation.z = Math.PI / 2;
+        module1.position.y = 0.008;
+        iss.add(module1);
+
+        const module2 = new THREE.Mesh(moduleGeometry, moduleMaterial);
+        module2.rotation.z = Math.PI / 2;
+        module2.position.y = -0.008;
+        iss.add(module2);
+
+        // Add ISS to scene
+        scene.add(iss);
+      }
+
+      // Create ISS orbit line
+      function createOrbitLine() {
+        const orbitGeometry = new THREE.BufferGeometry();
+        const orbitMaterial = new THREE.LineBasicMaterial({
+          color: 0xff5722,
+          transparent: true,
+          opacity: 0.5,
+        });
+
+        const orbitPoints = [];
+        const orbitRadius = 1.06; // Approximate orbit radius
+
+        for (let i = 0; i <= 64; i++) {
+          const theta = (i / 64) * Math.PI * 2;
+          orbitPoints.push(
+            new THREE.Vector3(
+              Math.cos(theta) * orbitRadius,
+              0,
+              Math.sin(theta) * orbitRadius
+            )
+          );
+        }
+
+        orbitGeometry.setFromPoints(orbitPoints);
+        issOrbit = new THREE.Line(orbitGeometry, orbitMaterial);
+        scene.add(issOrbit);
+      }
+
+      // Add controls for globe interaction
+      function addControls() {
+        let isDragging = false;
+        let previousMousePosition = { x: 0, y: 0 };
+
+        renderer.domElement.addEventListener("mousedown", (e) => {
+          isDragging = true;
+        });
+
+        renderer.domElement.addEventListener("mousemove", (e) => {
+          if (isDragging) {
+            const deltaMove = {
+              x: e.offsetX - previousMousePosition.x,
+              y: e.offsetY - previousMousePosition.y,
+            };
+
+            // Update Earth rotation
+            earthRotation += deltaMove.x * 0.01;
+            earth.rotation.y = earthRotation;
+
+            // Update ISS rotation to maintain relative position
+            issRotation -= deltaMove.x * 0.01;
+          }
+
+          previousMousePosition = {
+            x: e.offsetX,
+            y: e.offsetY,
+          };
+        });
+
+        renderer.domElement.addEventListener("mouseup", () => {
+          isDragging = false;
+        });
+
+        renderer.domElement.addEventListener("wheel", (e) => {
+          camera.position.z += e.deltaY * 0.001;
+          camera.position.z = Math.min(Math.max(camera.position.z, 1.5), 5);
+        });
+      }
+
+      // Animation loop
+      function animate() {
+        requestAnimationFrame(animate);
+
+        // Rotate Earth
+        earth.rotation.y += 0.0005;
+        earthRotation += 0.0005;
+
+        // Update ISS position
+        updateISSPosition();
+
+        renderer.render(scene, camera);
+      }
+
+      // Update ISS position based on real-time data
+      function updateISSPosition() {
+        if (issPosition.lat !== 0 || issPosition.lng !== 0) {
+          // Convert lat/lng to 3D position
+          const phi = (90 - issPosition.lat) * (Math.PI / 180);
+          const theta = (issPosition.lng + 180) * (Math.PI / 180);
+
+          const radius = 1.06; // Approximate orbit radius
+
+          // Calculate ISS position
+          const x = -(radius * Math.sin(phi) * Math.cos(theta));
+          const y = radius * Math.cos(phi);
+          const z = radius * Math.sin(phi) * Math.sin(theta);
+
+          // Apply rotation offset
+          iss.position.x =
+            x * Math.cos(issRotation) - z * Math.sin(issRotation);
+          iss.position.z =
+            x * Math.sin(issRotation) + z * Math.cos(issRotation);
+          iss.position.y = y;
+
+          // Rotate ISS to face direction of travel
+          iss.lookAt(
+            iss.position.x + Math.cos(issRotation + 0.1),
+            iss.position.y,
+            iss.position.z + Math.sin(issRotation + 0.1)
+          );
+        }
+      }
+
+      // Fetch ISS data from API
+      async function fetchISSData() {
+        try {
+          // Using the provided API key
+          const apiKey = "4UMVLvriEZibWP6Eo62RzAwodfS1AY3hz62JmMbQ";
+
+          // Fetch current ISS position
+          const positionResponse = await fetch(
+            `https://api.wheretheiss.at/v1/satellites/25544`
+          );
+          const positionData = await positionResponse.json();
+
+          // Update position data
+          issPosition.lat = positionData.latitude;
+          issPosition.lng = positionData.longitude;
+          issPosition.alt = positionData.altitude;
+
+          // Update UI
+          document.getElementById("longitude").textContent =
+            positionData.longitude.toFixed(4);
+          document.getElementById("latitude").textContent =
+            positionData.latitude.toFixed(4);
+          document.getElementById("altitude").textContent =
+            positionData.altitude.toFixed(2);
+          document.getElementById("velocity").textContent = (
+            positionData.velocity * 3.6
+          ).toFixed(2); // Convert km/s to km/h
+
+          // Update date and time
+          const now = new Date();
+          document.getElementById("datetime").textContent = now.toUTCString();
+
+          // Update last update time
+          const secondsSinceUpdate = Math.floor(
+            (Date.now() - lastUpdateTime) / 1000
+          );
+          document.getElementById("lastupdate").textContent =
+            secondsSinceUpdate;
+
+          lastUpdateTime = Date.now();
+        } catch (error) {
+          console.error("Error fetching ISS data:", error);
+        }
+      }
+
+      // Handle window resize
+      function handleResize() {
+        const container = document.getElementById("globe");
+        camera.aspect = container.clientWidth / container.clientHeight;
+        camera.updateProjectionMatrix();
+        renderer.setSize(container.clientWidth, container.clientHeight);
+      }
+
+      // Initialize contact modal
+      function initContactModal() {
+        const modal = document.getElementById("contact-modal");
+        const contactLink = document.getElementById("contact-link");
+        const closeModal = document.getElementById("close-modal");
+
+        contactLink.addEventListener("click", (e) => {
+          e.preventDefault();
+          modal.style.display = "flex";
+        });
+
+        closeModal.addEventListener("click", () => {
+          modal.style.display = "none";
+        });
+
+        window.addEventListener("click", (e) => {
+          if (e.target === modal) {
+            modal.style.display = "none";
+          }
+        });
+
+        // Handle form submission
+        const contactForm = document.querySelector(".contact-form");
+        contactForm.addEventListener("submit", (e) => {
+          e.preventDefault();
+
+          // In a real application, you would send the form data to a server
+          alert("Thank you for your message! We will get back to you soon.");
+          modal.style.display = "none";
+          contactForm.reset();
+        });
+      }
+
+      // Initialize subscription form
+      function initSubscriptionForm() {
+        const subscriptionForm = document.querySelector(".subscription-form");
+
+        subscriptionForm.addEventListener("submit", (e) => {
+          e.preventDefault();
+
+          const email = subscriptionForm.querySelector(
+            'input[type="email"]'
+          ).value;
+
+          // In a real application, you would send the email to a server
+          alert(
+            `Thank you for subscribing with ${email}! You will receive ISS updates soon.`
+          );
+          subscriptionForm.reset();
+        });
+      }
+
+      // Initialize join button
+      function initJoinButton() {
+        const joinBtn = document.querySelector(".join-btn");
+
+        joinBtn.addEventListener("click", () => {
+          // In a real application, this would open a registration form or redirect
+          alert("Join feature coming soon! Thank you for your interest.");
+        });
+      }
+
+      // Initialize everything when the page loads
+      window.addEventListener("load", () => {
+        initGlobe();
+        fetchISSData();
+        initContactModal();
+        initSubscriptionForm();
+        initJoinButton();
+
+        // Fetch ISS data every 5 seconds
+        setInterval(fetchISSData, 5000);
+
+        // Update last update time every second
+        setInterval(() => {
+          const secondsSinceUpdate = Math.floor(
+            (Date.now() - lastUpdateTime) / 1000
+          );
+          document.getElementById("lastupdate").textContent =
+            secondsSinceUpdate;
+        }, 1000);
+      });
+
+      // Handle window resize
+      window.addEventListener("resize", handleResize);
+    </script>
+  </body>
+</html>
